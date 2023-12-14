@@ -5,21 +5,26 @@
 "" ========================================================
 
 set scrolloff=10
-set number relativenumber
 set showmode
 set showcmd
 
 set smartcase
 set incsearch
 set hlsearch
+nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
 
-set visualbell
+set number relativenumber
+
+set clipboard
+
+map Q gq
 
 " Use system clipboard
-set clipboard+=unnamed
 
 let mapleader = " "
 
+
+set visualbell
 
 "" Plugin Settings
 "" ========================================================
@@ -28,127 +33,14 @@ set surround
 set highlightedyank
 set sneak
 set nerdtree
+set easymotion
+set quickscope
 
 " Easymotion settings
-set easymotion
 set notimeout
 
 " Which-key settings
 set which-key
-
-inoremap jk <Esc>
-
-nnoremap <esc> :noh<return><esc>
-
-" Tab navigation
-nnoremap <A-n> :tabnext<CR>
-nnoremap <A-p> :tabprev<CR>
-
-" Pane navigation
-nnoremap <A-h> <C-w>h
-nnoremap <A-l> <C-w>l
-nnoremap <A-k> <C-w>k
-nnoremap <A-j> <C-w>j
-
-" Jump between methods
-nnoremap [[ <Action>(MethodUp)
-nnoremap ]] <Action>(MethodDown)
-
-" Easy visual indentation
-vnoremap < <gv
-vnoremap > >gv
-
-" Execute macro saved in 'q' register
-nnoremap qj @q
-
-" Popup navigation
-inoremap <C-j> <Action>(PopupMenu-selectNext)
-inoremap <C-k> <Action>(PopupMenu-selectPrev)
-
-
-"" Leader commands
-"" ========================================================
-
-" Comment lines
-map <leader>cl <action>(CommentByLineComment)
-
-" Jump around with easymotion
-map <leader>j <Plug>(easymotion-s)
-
-" Open NERDTree (use q to exit)
-map <leader>fe :NERDTreeToggle<CR>
-
-map <leader>k <Action>(ShowErrorDescription)
-map <leader>b <Action>(ToggleLineBreakpoint)
-
-" Folding
-map <leader>zC :action CollapseAllRegions<CR>
-map <leader>zO :action ExpandAllRegions<CR>
-map <leader>zc :action CollapseRegion<CR>
-map <leader>zo :action ExpandRegion<CR>
-
-" Window splits
-map <leader>wv <Action>(SplitVertically)
-map <leader>ws <Action>(SplitHorizontally)
-map <leader>wu <Action>(Unsplit)
-map <leader>wm <Action>(MoveEditorToOppositeTabGroup)
-
-" Actions
-map <leader>ca <action>(ShowIntentionActions)
-map <leader><leader> <action>(SearchEverywhere)
-
-" File navigation
-map <leader>ff <action>(GotoFile)
-map <leader>fr <action>(RecentFiles)
-map <leader>fc <action>(FindInPath)
-map <leader>fl <action>(RecentLocations)
-
-" Close active tab
-map <leader>q <action>(CloseContent)
-
-" Refactoring
-map <leader>rn <Action>(RenameElement)
-map <leader>re <Action>(ExtractMethod)
-map <leader>rv <Action>(IntroduceVariable)
-map <leader>rf <Action>(IntroduceField)
-map <leader>rs <Action>(ChangeSignature)
-map <leader>rr <Action>(Refactorings.QuickListPopupAction)
-
-" Go to code
-nmap <leader>gd <Action>(GotoDeclaration)
-nmap <leader>gy <Action>(GotoTypeDeclaration)
-nmap <leader>gi <Action>(GotoImplementation)
-nmap <leader>gu <Action>(ShowUsages)
-nmap <leader>gt <Action>(GotoTest)
-nmap <leader>gf <Action>(Back)
-nmap <leader>gb <Action>(Forward)
-
-" Git windows
-map <leader>sc <Action>(CheckinProject)
-map <leader>ss <Action>(ActivateVersionControlToolWindow)
-map <leader>sb <Action>(Git.Branches)
-
-" Errors
-if has('ide')
-    if &ide =~? 'rider'
-        map <leader>en <Action>(ReSharperGotoNextErrorInSolution)
-        map <leader>ep <Action>(ReSharperGotoPrevErrorInSolution)
-    elseif &ide =~? 'goland'
-        map <leader>en <Action>(GotoNextError)
-        map <leader>ep <Action>(GotoPrevError)
-    endif
-endif
-
-:map \b <Action>(ToggleLineBreakpoint)
-
-" Don't use Ex mode, use Q for formatting.
-map Q gq
-
-" Highlight copied text
-Plug 'machakann/vim-highlightedyank'
-" Commentary plugin
-Plug 'tpope/vim-commentary'
-
 let g:WhichKey_FontSize = 16
 let g:WhichKey_CommandColor = "#41ead4"
 let g:WhichKey_PrefixColor = "#f335b2"
@@ -159,14 +51,15 @@ let g:WhichKeyDesc_leader = "<leader> Leader key"
 let g:WhichKeyDesc_leader = "<leader>fe Open file explorer"
 
 let g:WhichKeyDesc_easymotion = "<leader>j Jump with Easymotion"
+let g:WhichKeyDesc_easymotion_prefix = "<leader><leader>"
 
 let g:WhichKeyDesc_comment = "<leader>cl Comment line"
 
 let g:WhichKeyDesc_fold = "<leader>z Folding"
-let g:WhichKeyDesc_fold = "<leader>zc Fold region"
-let g:WhichKeyDesc_unfold = "<leader>zo Unfold region"
 let g:WhichKeyDesc_fold_all = "<leader>zC Fold all regions"
 let g:WhichKeyDesc_unfold_all = "<leader>zO Unfold all regions"
+let g:WhichKeyDesc_fold= "<leader>zc Fold region"
+let g:WhichKeyDesc_unfold= "<leader>zo Unfold region"
 
 let g:WhichKeyDesc_window = "<leader>w Window splits"
 let g:WhichKeyDesc_window_split_vertically = "<leader>wv Split vertically"
@@ -175,8 +68,10 @@ let g:WhichKeyDesc_window_split_unsplit = "<leader>wu Unsplit"
 let g:WhichKeyDesc_window_split_move_editor = "<leader>wm Move editor to opposite tab group"
 
 let g:WhichKeyDesc_action= "<leader>a Actions"
-let g:WhichKeyDesc_action_context_menu = "<leader>ca Open context menu"
-let g:WhichKeyDesc_action_search = "<leader>cs Open command modal"
+let g:WhichKeyDesc_action_context_menu = "<leader>am Open context menu"
+let g:WhichKeyDesc_action_search = "<leader>as Open command modal"
+
+let g:WhichKeyDesc_file_quickLook = "<leader><leader> Search Everywhere"
 
 let g:WhichKeyDesc_file_nav = "<leader>f File navigation"
 let g:WhichKeyDesc_file_nav_goto_file = "<leader>ff Go to file"
@@ -212,3 +107,129 @@ let g:WhichKeyDesc_errors = "<leader>e Error navigation"
 let g:WhichKeyDesc_errors_next = "<leader>en Go to next error in solution"
 let g:WhichKeyDesc_errors_prev = "<leader>ep Go to previous error in solution"
 
+
+"" Key mappings
+"" ========================================================
+
+nnoremap s s
+vnoremap s s
+
+inoremap jk <Esc>
+
+" Tab navigation
+nnoremap <A-n> :tabnext<CR>
+nnoremap <A-p> :tabprev<CR>
+
+" Pane navigation
+nnoremap <A-h> <C-w>h
+nnoremap <A-l> <C-w>l
+nnoremap <A-k> <C-w>k
+nnoremap <A-j> <C-w>j
+
+" Jump between methods
+nnoremap [[ <Action>(MethodUp)
+nnoremap ]] <Action>(MethodDown)
+
+" Easy visual indentation
+vnoremap < <gv
+vnoremap > >gv
+
+" Execute macro saved in 'q' register
+nnoremap qj @q
+
+" Popup navigation
+inoremap <C-j> <Action>(PopupMenu-selectNext)
+inoremap <C-k> <Action>(PopupMenu-selectPrev)
+
+
+"" Leader commands
+"" ========================================================
+
+"" Coping and pasting
+nnoremap <leader>yy "+yy
+vnoremap <leader>y "+y
+
+nnoremap <leader>p "+p
+vnoremap <leader>p "+p
+nnoremap <leader>P "+P
+vnoremap <leader>P "+P
+
+vmap r "_dP
+nnoremap <leader>d "_d
+vnoremap <leader>d "_d
+
+" Comment lines
+map <leader>cl <action>(CommentByLineComment)
+
+" Jump around with easymotion
+map <leader>j <Plug>(easymotion-s)
+
+" Open NERDTree (use q to exit)
+map <leader>fe :NERDTreeToggle<CR>
+
+" Folding
+map <leader>zc :action CollapseRegion<CR>
+map <leader>zo :action ExpandRegion<CR>
+map <leader>zC :action CollapseAllRegions<CR>
+map <leader>zO :action ExpandAllRegions<CR>
+
+" Window splits
+map <leader>wv <action>(SplitVertically)
+map <leader>ws <action>(SplitHorizontally)
+map <leader>wu <action>(Unsplit)
+map <leader>wm <action>(MoveEditorToOppositeTabGroup)
+
+" Actions
+map <leader>ca <action>(ShowIntentionActions)
+map <leader><leader> <action>(SearchEverywhere)
+
+" File navigation
+map <leader>ff <Action>(GotoFile)
+map <leader>fr <Action>(RecentFiles)
+map <leader>fc <Action>(FindInPath)
+map <leader>fl <Action>(RecentLocations)
+
+" Close active tab
+map <leader>q <action>(CloseContent)
+
+" Refactoring
+map <leader>rn <action>(RenameElement)
+map <leader>re <action>(ExtractMethod)
+map <leader>rv <action>(IntroduceVariable)
+map <leader>rf <action>(IntroduceField)
+map <leader>rs <action>(ChangeSignature)
+map <leader>rr <action>(Refactorings.QuickListPopupAction)
+
+" Go to code
+nmap <leader>gd <action>(GotoDeclaration)
+nmap <leader>gy <action>(GotoTypeDeclaration)
+nmap <leader>gi <action>(GotoImplementation)
+nmap <leader>gu <action>(ShowUsages)
+nmap <leader>gt <action>(GotoTest)
+nmap <leader>gf <action>(Back)
+nmap <leader>gb <action>(Forward)
+
+" Git windows
+map <leader>sc <action>(CheckinProject)
+map <leader>ss <action>(ActivateVersionControlToolWindow)
+map <leader>sb <action>(Git.Branches)
+
+" Errors
+if has('ide')
+    if &ide =~? 'rider'
+        map <leader>en <action>(ReSharperGotoNextErrorInSolution)
+        map <leader>ep <action>(ReSharperGotoPrevErrorInSolution)
+        map <leader>es <action>(ShowErrorDescription)
+    elseif &ide =~? 'goland'
+        map <leader>en <Action>(GotoNextError)
+        map <leader>ep <Action>(GotoPrevError)
+    endif
+endif
+
+" Debugging
+map <leader>b <action>(ToggleLineBreakpoint)
+ 
+ " Tests
+map <leader>tr <action>(RiderUnitTestRepeatPreviousRunAction)
+
+nnoremap <leader>is :source ~/.ideavimrc<CR>
