@@ -13,6 +13,35 @@ map({ "n", "v" }, "<leader>p", "+p", { remap = false })
 map({ "n", "v" }, "<leader>P", "+P", { remap = false })
 
 -- dap
-map("n", "<leader>D", function()
+map("n", "<F4>", function()
+  require("dapui").toggle()
+end, { remap = false })
+
+map("n", "<F5>", function()
+  require("dap").continue()
+end)
+
+map("n", "<F10>", function()
   require("dap").step_over()
 end, { remap = false })
+map("n", "<F11>", function()
+  require("dap").step_into()
+end, { remap = false })
+map("n", "<C-F11>", function()
+  require("dap").step_out()
+end, { remap = false })
+
+map("n", "<F9>", function()
+  require("dap").toggle_breakpoint()
+end)
+
+map("n", "<C-F9>", function()
+  require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
+end)
+
+map("n", "<Leader>dro", function()
+  require("dap").repl.open()
+end)
+map("n", "<Leader>drl", function()
+  require("dap").repl.run_last()
+end)
