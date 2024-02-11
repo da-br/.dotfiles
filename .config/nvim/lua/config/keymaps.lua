@@ -12,6 +12,17 @@ map("n", "<leader>yy", "+yy", { remap = false })
 map({ "n", "v" }, "<leader>p", "+p", { remap = false })
 map({ "n", "v" }, "<leader>P", "+P", { remap = false })
 
+-- delete to null regester
+map({ "n", "v" }, "<leader>D", '"_D', { remap = false })
+map({ "n", "v" }, "<leader>d", '"_d', { remap = false })
+
+-- nice replace keybind
+map("v", "r", '"_dP', { remap = false })
+
+-- vmap r "_dP
+-- nnoremap <leader>d "_d
+-- vnoremap <leader>d "_d
+
 -- dap
 map("n", "<F4>", function()
   require("dapui").toggle()
