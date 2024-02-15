@@ -1,6 +1,21 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 export ZSH="$HOME/.oh-my-zsh"
 
-ZSH_THEME="robbyrussell"
+# ZSH_THEME="robbyrussell"
+
+# Download Znap, if it's not there yet.
+[[ -r ~/.local/znap/znap.zsh ]] ||
+    git clone --depth 1 -- \
+        https://github.com/marlonrichert/zsh-snap.git ~/.local/znap
+
+source ~/.local/znap/znap.zsh  # Start Znap
+() { [[ -r $1 ]] && source $1 } ${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${USERNAME}.zsh
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -8,6 +23,7 @@ ZSH_THEME="robbyrussell"
 # Uncomment the following line to use hyphen-insensitive completion.
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
+
 
 # Uncomment one of the following lines to change the auto-update behavior
 # zstyle ':omz:update' mode disabled  # disable automatic updates
@@ -55,6 +71,13 @@ ENABLE_CORRECTION="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git git-auto-fetch tmux)
 
+# Znap installs
+znap source marlonrichert/zsh-autocomplete
+znap source zsh-users/zsh-autosuggestions
+znap source zsh-users/zsh-syntax-highlighting
+
+znap eval zoxide "zoxide init zsh"
+
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
@@ -72,9 +95,7 @@ source $ZSH/oh-my-zsh.sh
 
 export EDITOR=nvim
 alias mux=tmuxinator
-alias config='/usr/bin/git --git-dir=/home/dabr/.cfg/ --work-tree=/home/dabr'
 
-eval "$(zoxide init zsh)"
 
 # Path Exorts
 export PATH=$PATH:$HOME/.local/bin/
@@ -95,3 +116,10 @@ export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
 # alias
 alias godot="$HOME/GodotEngine/godot"
+DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# znap prompt sindresorhus/pure
+znap source romkatv/powerlevel10k powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
