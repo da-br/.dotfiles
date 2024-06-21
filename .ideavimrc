@@ -1,0 +1,227 @@
+"" Base Settings
+"" ========================================================
+
+set scrolloff=10
+set showmode
+set showcmd
+
+set ignorecase smartcase
+set incsearch
+set hlsearch
+nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
+
+set number relativenumber
+
+"" set clipboard+=unnamedplus
+
+let mapleader = " "
+
+set visualbell
+
+"" Plugin Settings
+"" ========================================================
+
+set highlightedyank
+set sneak
+set nerdtree
+set easymotion
+set quickscope
+
+"" Easymotion settings
+set notimeout
+
+"" Which-key settings
+set which-key
+let g:WhichKey_FontSize = 16
+let g:WhichKey_CommandColor = "#41ead4"
+let g:WhichKey_PrefixColor = "#f335b2"
+let g:WhichKey_SortOrder = "by_key_prefix_first"
+
+let g:WhichKeyDesc_leader = "<leader> Leader key"
+
+let g:WhichKeyDesc_leader = "<leader>fe Open file explorer"
+
+let g:WhichKeyDesc_easymotion = "<leader>j Jump with Easymotion"
+let g:WhichKeyDesc_easymotion_prefix = "<leader><leader>"
+
+let g:WhichKeyDesc_comment = "<leader>cl Comment line"
+
+let g:WhichKeyDesc_fold = "<leader>z Folding"
+let g:WhichKeyDesc_fold_all = "<leader>zC Fold all regions"
+let g:WhichKeyDesc_unfold_all = "<leader>zO Unfold all regions"
+let g:WhichKeyDesc_fold= "<leader>zc Fold region"
+let g:WhichKeyDesc_unfold= "<leader>zo Unfold region"
+
+let g:WhichKeyDesc_window = "<leader>w Window splits"
+let g:WhichKeyDesc_window_split_vertically = "<leader>wv Split vertically"
+let g:WhichKeyDesc_window_split_horizontally = "<leader>wh Split horizontally"
+let g:WhichKeyDesc_window_split_unsplit = "<leader>wu Unsplit"
+let g:WhichKeyDesc_window_split_move_editor = "<leader>wm Move editor to opposite tab group"
+
+let g:WhichKeyDesc_action= "<leader>a Actions"
+let g:WhichKeyDesc_action_context_menu = "<leader>am Open context menu"
+let g:WhichKeyDesc_action_search = "<leader>as Open command modal"
+
+let g:WhichKeyDesc_file_quickLook = "<leader><leader> Search Everywhere"
+
+let g:WhichKeyDesc_file_nav = "<leader>f File navigation"
+let g:WhichKeyDesc_file_nav_goto_file = "<leader>ff Go to file"
+let g:WhichKeyDesc_file_nav_goto_content = "<leader>fc Search for file content"
+let g:WhichKeyDesc_file_nav_show_recent_files = "<leader>fr Show recent files"
+let g:WhichKeyDesc_file_nav_show_recent_locations = "<leader>fl Show recent locations"
+
+let g:WhichKeyDesc_close_tab = "<leader>q Close active tab"
+
+let g:WhichKeyDesc_refactoring = "<leader>r Refactoring menu"
+let g:WhichKeyDesc_refactoring_rename = "<leader>rn Rename element"
+let g:WhichKeyDesc_refactoring_method = "<leader>re Extract method"
+let g:WhichKeyDesc_refactoring_variable = "<leader>rv Introduce variable"
+let g:WhichKeyDesc_refactoring_field = "<leader>rf Introduce field"
+let g:WhichKeyDesc_refactoring_signature = "<leader>rs Change signature"
+let g:WhichKeyDesc_refactoring_all = "<leader>rr Open refactorings list"
+
+let g:WhichKeyDesc_goto = "<leader>g Go to X"
+let g:WhichKeyDesc_goto_declaration = "<leader>gd Go to Definition"
+let g:WhichKeyDesc_goto_type_declaration = "<leader>gy Go to Type Definition"
+let g:WhichKeyDesc_goto_implementation = "<leader>gi Go to Implementation"
+let g:WhichKeyDesc_goto_usages = "<leader>gu Go to Usages"
+let g:WhichKeyDesc_goto_test = "<leader>gt Go to Test"
+let g:WhichKeyDesc_goto_back = "<leader>gb Go Back"
+let g:WhichKeyDesc_goto_forward = "<leader>gf Go Forward"
+
+let g:WhichKeyDesc_git = "<leader>s Git operations"
+let g:WhichKeyDesc_git_commit = "<leader>sc Open Git commit dialog"
+let g:WhichKeyDesc_git_status = "<leader>ss Open Git status dialog"
+let g:WhichKeyDesc_git_branches = "<leader>sb Open Git branches list"
+
+let g:WhichKeyDesc_errors = "<leader>e Error navigation"
+let g:WhichKeyDesc_errors_next = "<leader>en Go to next error in solution"
+let g:WhichKeyDesc_errors_prev = "<leader>ep Go to previous error in solution"
+
+
+"" Key mappings
+"" ========================================================
+
+"" Tab navigation
+nnoremap <A-n> :tabnext<CR>
+nnoremap <A-p> :tabprev<CR>
+
+"" Pane navigation
+nnoremap <A-h> <C-w>h
+nnoremap <A-l> <C-w>l
+nnoremap <A-k> <C-w>k
+nnoremap <A-j> <C-w>j
+
+"" Jump between methods
+nnoremap [[ <Action>(MethodUp)
+nnoremap ]] <Action>(MethodDown)
+
+"" Easy visual indentation
+vnoremap < <gv
+vnoremap > >gv
+
+"" Execute macro saved in 'q' register
+nnoremap qj @q
+
+"" Popup navigation
+imap <C-n> <Action>(PopupMenu-selectNext)
+imap <C-p> <Action>(PopupMenu-selectPrev)
+
+"" Errors
+if has('ide')
+    if &ide =~? 'rider'
+        map <leader>tr <action>(RiderUnitTestRepeatPreviousRunAction)
+        map ]e <action>(ReSharperGotoNextErrorInSolution)
+        map [e <action>(ReSharperGotoPrevErrorInSolution)
+        map <leader>xs <action>(ShowErrorDescription)
+    elseif &ide =~? 'goland'
+        map ]e <Action>(GotoNextError)
+        map [e <Action>(GotoPrevError)
+    endif
+endif
+
+"" Comment lines
+nmap gcc <action>(CommentByLineComment)
+vmap gc <action>(CommentByLineComment)
+
+"" Go to code
+nmap gd <action>(GotoDeclaration)
+nmap gy <action>(GotoTypeDeclaration)
+nmap gi <action>(GotoImplementation)
+nmap gu <action>(ShowUsages)
+nmap gt <action>(GotoTest)
+nmap gn <action>(Forward)
+nmap gp <action>(Back)
+
+"" Easy lines moves
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
+
+"" Leader commands
+"" ========================================================
+
+"" Coping and pasting
+nnoremap <leader>yy "+yy
+vnoremap <leader>y "+y
+
+nnoremap <leader>p "+p
+vnoremap <leader>p "+p
+nnoremap <leader>P "+P
+vnoremap <leader>P "+P
+
+vmap r "_dP
+nnoremap <leader>d "_d
+vnoremap <leader>d "_d
+
+"" Jump around with easymotion
+map s <Plug>(easymotion-s)
+
+"" Open NERDTree (use q to exit)
+map <leader>fe :NERDTreeToggle<CR>
+
+"" Folding
+map <leader>zc :action CollapseRegion<CR>
+map <leader>zo :action ExpandRegion<CR>
+map <leader>zC :action CollapseAllRegions<CR>
+map <leader>zO :action ExpandAllRegions<CR>
+
+"" Window splits
+map <leader>wv <action>(SplitVertically)
+map <leader>ws <action>(SplitHorizontally)
+map <leader>wu <action>(Unsplit)
+map <leader>wm <action>(MoveEditorToOppositeTabGroup)
+
+"" Actions
+map <leader>ca <action>(ShowIntentionActions)
+map <leader>/ <action>(SearchEverywhere)
+map <leader><leader> <action>(GotoFile)
+
+"" File navigation
+map <leader>ff <Action>(GotoFile)
+map <leader>fr <Action>(RecentFiles)
+map <leader>fc <Action>(FindInPath)
+map <leader>fl <Action>(RecentLocations)
+
+"" Close active tab
+map <leader>bd <action>(CloseContent)
+
+"" Refactoring
+map <leader>cr <action>(RenameElement)
+map <leader>re <action>(ExtractMethod)
+map <leader>rv <action>(IntroduceVariable)
+map <leader>rf <action>(IntroduceField)
+map <leader>rs <action>(ChangeSignature)
+map <leader>rr <action>(Refactorings.QuickListPopupAction)
+
+"" Git windows
+map <leader>sc <action>(CheckinProject)
+map <leader>ss <action>(ActivateVersionControlToolWindow)
+map <leader>sb <action>(Git.Branches)
+
+"" Debugging
+map <leader>db <action>(ToggleLineBreakpoint)
+map <leader>dC <action>(RunToCursor)
