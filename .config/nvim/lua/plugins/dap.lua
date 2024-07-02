@@ -22,8 +22,6 @@ return {
 			local dap = require("dap")
 			local ui = require("dapui")
 
-			-- dap.defaults.fallback.force_external_terminal = true
-
 			require("dapui").setup()
 			require("dap-go").setup({
 				dap_configurations = {
