@@ -7,6 +7,8 @@ map({ "n", "v" }, "<leader>d", '"_d', { remap = false })
 
 -- nice replace keybind
 map("v", "r", '"_dP', { remap = false })
+map("v", "<C-C>", '"+y')
+map("v", "<C-V>", '"+p')
 
 -- better up/down
 map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
@@ -43,8 +45,8 @@ map("n", "gn", "<C-i>", { noremap = true, silent = true })
 map("v", "<", "<gv")
 map("v", ">", ">gv")
 
-map("n", "<leader>xl", "<cmd>lopen<cr>", { desc = "Location List" })
-map("n", "<leader>xq", "<cmd>copen<cr>", { desc = "Quickfix List" })
+-- map("n", "<leader>xl", "<cmd>lopen<cr>", { desc = "Location List" })
+-- map("n", "<leader>xq", "<cmd>copen<cr>", { desc = "Quickfix List" })
 
 map("n", "[q", vim.cmd.cprev, { desc = "Previous Quickfix" })
 map("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
