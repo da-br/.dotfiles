@@ -8,18 +8,8 @@ plugins=(git git-auto-fetch tmux)
 
 source $ZSH/oh-my-zsh.sh
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='nvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+alias sl='sesh connect $(sesh list -c | fzf)  '
+alias lg='lazygit'
 
 ff() {
   local selected_file
@@ -37,22 +27,25 @@ ffd() {
   fi
 }
 
-e() {
-	# Check if the file argument is provided
-	if [[ -z $1 ]]; then
-        if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-            dolphin .
-            return 0
-        fi
-        explorer .
-        return 0
-	fi
-    
-    if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-        dolphin $1
-        return 0
+spf() {
+    os=$(uname -s)
+
+    # Linux
+    if [[ "$os" == "Linux" ]]; then
+        export SPF_LAST_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/superfile/lastdir"
     fi
-    explorer $1
+
+    # macOS
+    if [[ "$os" == "Darwin" ]]; then
+        export SPF_LAST_DIR="$HOME/Library/Application Support/superfile/lastdir"
+    fi
+
+    command spf "$@"
+
+    [ ! -f "$SPF_LAST_DIR" ] || {
+        . "$SPF_LAST_DIR"
+        rm -f -- "$SPF_LAST_DIR" > /dev/null
+    }
 }
 
 gfp() {
@@ -94,8 +87,6 @@ gfp() {
 		echo -n $full_path | win32yank -i
 	fi
 }
-
-
 
 export EDITOR=nvim
 
