@@ -69,3 +69,6 @@ map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
 
 -- Clear search with <esc>
 map({ "i", "n" }, "<esc><esc>", "<cmd>noh<cr><esc>", { desc = "Escape and Clear hlsearch" })
+
+-- remove stupid suspend
+map("n", "<C-z>", "<nop>")

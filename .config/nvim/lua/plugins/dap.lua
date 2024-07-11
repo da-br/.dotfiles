@@ -42,9 +42,9 @@ return {
 				require("dapui").eval(nil, { enter = true })
 			end)
 
-			vim.keymap.set("n", "<leader>td", function()
-				require("neotest").run.run({ strategy = "dap" })
-			end, { desc = "Debug Nearest" })
+			-- vim.keymap.set("n", "<leader>td", function()
+			-- 	require("neotest").run.run({ strategy = "dap" })
+			-- end, { desc = "Debug Nearest" })
 
 			vim.keymap.set("n", "<leader>du", ui.toggle)
 			vim.keymap.set("n", "<F4>", dap.step_back)
