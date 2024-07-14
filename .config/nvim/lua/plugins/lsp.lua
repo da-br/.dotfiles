@@ -104,7 +104,7 @@ return {
 				vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = 0 })
 
 				vim.keymap.set("n", "<space>cr", vim.lsp.buf.rename, { buffer = 0 })
-				vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, { buffer = 0 })
+				vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, { buffer = 0 })
 
 				-- Override server capabilities
 				if settings.server_capabilities then
