@@ -10,6 +10,7 @@ source $ZSH/oh-my-zsh.sh
 
 alias sl='sesh connect $(sesh list -c | fzf)  '
 alias lg='lazygit'
+source <(fzf --zsh)
 
 ff() {
   local selected_file
@@ -38,6 +39,11 @@ spf() {
     # macOS
     if [[ "$os" == "Darwin" ]]; then
         export SPF_LAST_DIR="$HOME/Library/Application Support/superfile/lastdir"
+e() {
+	# Check if the file argument is provided
+	if [[ -z $1 ]]; then
+        if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+            dolphin .
     fi
 
     command spf "$@"

@@ -22,7 +22,6 @@ set visualbell
 "" ========================================================
 
 set highlightedyank
-set sneak
 set nerdtree
 set easymotion
 set quickscope
@@ -112,10 +111,6 @@ nnoremap <A-l> <C-w>l
 nnoremap <A-k> <C-w>k
 nnoremap <A-j> <C-w>j
 
-"" Jump between methods
-nnoremap [[ <Action>(MethodUp)
-nnoremap ]] <Action>(MethodDown)
-
 "" Easy visual indentation
 vnoremap < <gv
 vnoremap > >gv
@@ -123,14 +118,10 @@ vnoremap > >gv
 "" Execute macro saved in 'q' register
 nnoremap qj @q
 
-"" Popup navigation
-imap <C-n> <Action>(PopupMenu-selectNext)
-imap <C-p> <Action>(PopupMenu-selectPrev)
-
 "" Errors
 if has('ide')
     if &ide =~? 'rider'
-        map <leader>tr <action>(RiderUnitTestRepeatPreviousRunAction)
+        map <leader>tl <action>(RiderUnitTestRepeatPreviousRunAction)
         map ]e <action>(ReSharperGotoNextErrorInSolution)
         map [e <action>(ReSharperGotoPrevErrorInSolution)
         map <leader>xs <action>(ShowErrorDescription)
@@ -141,8 +132,7 @@ if has('ide')
 endif
 
 "" Comment lines
-nmap gcc <action>(CommentByLineComment)
-vmap gc <action>(CommentByLineComment)
+map gcc <action>(CommentByLineComment)
 
 "" Go to code
 nmap gd <action>(GotoDeclaration)
@@ -165,11 +155,11 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 "" ========================================================
 
 "" Coping and pasting
-nnoremap <leader>yy "+yy
-vnoremap <leader>y "+y
+nnoremap <C-C> "+yy
+vnoremap <C-C> "+y
 
-nnoremap <leader>p "+p
-vnoremap <leader>p "+p
+nnoremap <C-V>p "+p
+vnoremap <C-V>p "+p
 nnoremap <leader>P "+P
 vnoremap <leader>P "+P
 
@@ -197,14 +187,15 @@ map <leader>wm <action>(MoveEditorToOppositeTabGroup)
 
 "" Actions
 map <leader>ca <action>(ShowIntentionActions)
-map <leader>/ <action>(SearchEverywhere)
-map <leader><leader> <action>(GotoFile)
+map <leader><leader> <action>(SearchEverywhere)
+map <leader>/ <action>(Find)
 
 "" File navigation
 map <leader>ff <Action>(GotoFile)
 map <leader>fr <Action>(RecentFiles)
 map <leader>fc <Action>(FindInPath)
 map <leader>fl <Action>(RecentLocations)
+map <leader>fw <Action>(FindWordAtCaret)
 
 "" Close active tab
 map <leader>bd <action>(CloseContent)
@@ -222,6 +213,5 @@ map <leader>sc <action>(CheckinProject)
 map <leader>ss <action>(ActivateVersionControlToolWindow)
 map <leader>sb <action>(Git.Branches)
 
-"" Debugging
-map <leader>db <action>(ToggleLineBreakpoint)
-map <leader>dC <action>(RunToCursor)
+"" Tests
+map <leader>ts <action>(ActivateUnitTestsToolWindow)
