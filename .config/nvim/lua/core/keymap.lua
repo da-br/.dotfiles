@@ -30,9 +30,6 @@ map("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move Up" })
 map("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move Down" })
 map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move Up" })
 
--- golang error handling
-vim.keymap.set("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
-
 -- save file
 map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 
@@ -72,3 +69,4 @@ map({ "i", "n" }, "<esc><esc>", "<cmd>noh<cr><esc>", { desc = "Escape and Clear 
 
 -- remove stupid suspend
 map("n", "<C-z>", "<nop>")
+map({ "n", "i" }, "<F1>", "<nop>")
