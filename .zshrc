@@ -12,6 +12,31 @@ alias sl='sesh connect $(sesh list -c | fzf)  '
 alias lg='lazygit'
 source <(fzf --zsh)
 
+load_secrets() {
+    local encrypted_file="$HOME/.secrets/.env.gpg"
+    local decrypted_file="$HOME/.secrets/.env"
+
+    # Decrypt the file
+    gpg --decrypt "$encrypted_file" > "$decrypted_file"
+    if [ $? -ne 0 ]; then
+        echo "Failed to decrypt the file"
+        return 1
+    fi
+
+    # Source the decrypted file
+    if [ -f "$decrypted_file" ]; then
+        source "$decrypted_file"
+        echo "Environment variables loaded successfully"
+    else
+        echo "Decrypted file not found"
+        return 1
+    fi
+
+    # Remove the decrypted file
+    rm "$decrypted_file"
+
+}
+
 ff() {
   local selected_file
   selected_file=$(fd --type f --hidden --exclude .git | fzf)
@@ -39,11 +64,6 @@ spf() {
     # macOS
     if [[ "$os" == "Darwin" ]]; then
         export SPF_LAST_DIR="$HOME/Library/Application Support/superfile/lastdir"
-e() {
-	# Check if the file argument is provided
-	if [[ -z $1 ]]; then
-        if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-            dolphin .
     fi
 
     command spf "$@"
