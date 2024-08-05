@@ -4,7 +4,7 @@ return {
 		require("trouble").setup()
 		vim.keymap.set(
 			"n",
-			"<leader>xl",
+			"<leader>xs",
 			":Trouble diagnostics toggle win.position=right focus=true<cr>",
 			{ desc = "Diagnostics (Trouble)" }
 		)

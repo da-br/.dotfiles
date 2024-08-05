@@ -46,7 +46,7 @@ return {
 			-- 	require("neotest").run.run({ strategy = "dap" })
 			-- end, { desc = "Debug Nearest" })
 
-			vim.keymap.set("n", "<leader>du", ui.toggle, { desc = "Debug ui toggle" })
+			vim.keymap.set("n", "<leader>ds", ui.toggle, { desc = "Debug show ui toggle" })
 			vim.keymap.set("n", "<F4>", dap.step_back)
 			vim.keymap.set("n", "<F5>", dap.continue)
 			vim.keymap.set("n", "<F17>", dap.terminate, { desc = "<S-F5> Stop Debug" })
