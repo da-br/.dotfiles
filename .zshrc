@@ -10,6 +10,7 @@ source $ZSH/oh-my-zsh.sh
 
 alias sdn='shutdown -f now'
 alias rsn='shutdown -rf now'
+alias rg='rg --path-separator //'
 alias sl='sesh connect $(sesh list -c | fzf)  '
 alias lg='lazygit'
 
@@ -54,27 +55,6 @@ ffd() {
   fi
 }
 
-spf() {
-    os=$(uname -s)
-
-    # Linux
-    if [[ "$os" == "Linux" ]]; then
-        export SPF_LAST_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/superfile/lastdir"
-    fi
-
-    # macOS
-    if [[ "$os" == "Darwin" ]]; then
-        export SPF_LAST_DIR="$HOME/Library/Application Support/superfile/lastdir"
-    fi
-
-    command spf "$@"
-
-    [ ! -f "$SPF_LAST_DIR" ] || {
-        . "$SPF_LAST_DIR"
-        rm -f -- "$SPF_LAST_DIR" > /dev/null
-    }
-}
-
 gfp() {
 	# Check if the file argument is provided
 	if [[ -z $1 ]]; then
@@ -113,6 +93,27 @@ gfp() {
 	if $copy_to_clipboard; then
 		echo -n $full_path | win32yank -i
 	fi
+}
+
+spf() {
+    os=$(uname -s)
+
+    # Linux
+    if [[ "$os" == "Linux" ]]; then
+        export SPF_LAST_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/superfile/lastdir"
+    fi
+
+    # macOS
+    if [[ "$os" == "Darwin" ]]; then
+        export SPF_LAST_DIR="$HOME/Library/Application Support/superfile/lastdir"
+    fi
+
+    command spf "$@"
+
+    [ ! -f "$SPF_LAST_DIR" ] || {
+        . "$SPF_LAST_DIR"
+        rm -f -- "$SPF_LAST_DIR" > /dev/null
+    }
 }
 
 export EDITOR=nvim
