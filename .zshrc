@@ -1,16 +1,14 @@
-export ZSH="$HOME/.oh-my-zsh"
-
 ZSH_THEME="robbyrussell"
 
 ENABLE_CORRECTION="true"
 
 plugins=(git git-auto-fetch tmux)
 
-source $ZSH/oh-my-zsh.sh
 
 alias sdn='shutdown -f now'
 alias rsn='shutdown -rf now'
-alias rg='rg --path-separator //'
+alias rgw='rg --path-separator //'
+alias rgf='rg --files'
 alias sl='sesh connect $(sesh list -c | fzf)  '
 alias lg='lazygit'
 
@@ -134,6 +132,9 @@ export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
 export GOBIN=$HOME/go/bin
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+
+fpath=($HOME/.config/zsh $fpath)
+autoload -Uz prompt_purification_setup && prompt_purification_setup
 
 eval "$(zoxide init --cmd cd zsh)"
 
