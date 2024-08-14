@@ -12,7 +12,6 @@ alias sdn='shutdown -f now'
 alias rsn='shutdown -rf now'
 alias sl='sesh connect $(sesh list -c | fzf)  '
 alias lg='lazygit'
-source <(fzf --zsh)
 
 load_secrets() {
     local encrypted_file="$HOME/.secrets/.env.gpg"
@@ -136,3 +135,11 @@ export GOBIN=$HOME/go/bin
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
 eval "$(zoxide init --cmd cd zsh)"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+if [[ ! "$PATH" == */home/dabr/.fzf/bin* ]]; then
+  PATH="${PATH:+${PATH}:}/home/dabr/.fzf/bin"
+fi
+
+source <(fzf --zsh)
