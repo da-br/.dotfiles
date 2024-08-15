@@ -1,9 +1,12 @@
+export ZSH="$HOME/.oh-my-zsh"
+
 ZSH_THEME="robbyrussell"
 
 ENABLE_CORRECTION="true"
 
 plugins=(git git-auto-fetch tmux)
 
+source $ZSH/oh-my-zsh.sh
 
 alias sdn='shutdown -f now'
 alias rsn='shutdown -rf now'
