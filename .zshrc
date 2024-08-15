@@ -1,16 +1,9 @@
-# ZSH_THEME="robbyrussell"
-ZSH_THEME=""
+ZSH_THEME="robbyrussell"
 
-# vim mapping
-bindkey -v
-export KEYTIMEOUT=1
-zmodload zsh/complist
-bindkey -M menuselect 'h' vi-backward-char
-bindkey -M menuselect 'k' vi-up-line-or-history
-bindkey -M menuselect 'l' vi-forward-char
-bindkey -M menuselect 'j' vi-down-line-or-history
+ENABLE_CORRECTION="true"
 
-# ENABLE_CORRECTION="true"
+plugins=(git git-auto-fetch tmux)
+
 
 alias sdn='shutdown -f now'
 alias rsn='shutdown -rf now'
@@ -121,33 +114,6 @@ spf() {
     }
 }
 
-cursor_mode() {
-    # See https://ttssh2.osdn.jp/manual/4/en/usage/tips/vim.html for cursor shapes
-    cursor_block='\e[2 q'
-    cursor_beam='\e[6 q'
-
-    function zle-keymap-select {
-        if [[ ${KEYMAP} == vicmd ]] ||
-            [[ $1 = 'block' ]]; then
-            echo -ne $cursor_block
-        elif [[ ${KEYMAP} == main ]] ||
-            [[ ${KEYMAP} == viins ]] ||
-            [[ ${KEYMAP} = '' ]] ||
-            [[ $1 = 'beam' ]]; then
-            echo -ne $cursor_beam
-        fi
-    }
-
-    zle-line-init() {
-        echo -ne $cursor_beam
-    }
-
-    zle -N zle-keymap-select
-    zle -N zle-line-init
-}
-
-cursor_mode
-
 export EDITOR=nvim
 
 # Path Exorts
@@ -167,16 +133,8 @@ export GOPATH=$HOME/go
 export GOBIN=$HOME/go/bin
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
-fpath=($HOME/.config/zsh/pure $fpath)
-autoload -U promptinit; promptinit
-autoload -U compinit; compinit
-
-_comp_options+=(globdots) # With hidden files
-
-zstyle :prompt:pure:git:stash show yes
-zstyle :prompt:pure:path color cyan
-
-prompt pure
+fpath=($HOME/.config/zsh $fpath)
+autoload -Uz prompt_purification_setup && prompt_purification_setup
 
 eval "$(zoxide init --cmd cd zsh)"
 
