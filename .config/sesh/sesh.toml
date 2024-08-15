@@ -6,4 +6,10 @@ startup_script = "~/.config/sesh/scripts/dotfiles.sh"
 [[session]]
 name = "metqly"
 path = "~/Dev/Projects/metql"
-startup_script = "~/.config/sesh/scripts/metql.sh"
+startup_script = "~/.config/sesh/scripts/dev.sh"
+
+
+[[session]]
+name = "algo"
+path = "~/Dev/Projects/Algo"
+startup_script = "~/.config/sesh/scripts/dev.sh"
