@@ -55,7 +55,9 @@ return {
 				require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
 			end, { desc = "<S-F9> Stop Debug" })
 			vim.keymap.set("n", "<F70>", dap.run_to_cursor) -- <C-F10>
+			vim.keymap.set("n", "<leader>dc", dap.run_to_cursor) -- <C-F10>
 			vim.keymap.set("n", "<F82>", dap.goto_) -- <C-S-F10>
+			vim.keymap.set("n", "<leader>ds", dap.goto_) -- <C-S-F10>
 			vim.keymap.set("n", "<F10>", dap.step_over)
 			vim.keymap.set("n", "<F11>", dap.step_into)
 			vim.keymap.set("n", "<F23>", dap.step_out)

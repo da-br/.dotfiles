@@ -18,6 +18,7 @@ alias rgw='rg --path-separator //'
 alias rgf='rg --files'
 alias sl='sesh connect $(sesh list -c | fzf)  '
 alias lg='lazygit'
+alias xopen='xdg-open'
 
 load_secrets() {
     local encrypted_file="$HOME/.secrets/.env.gpg"

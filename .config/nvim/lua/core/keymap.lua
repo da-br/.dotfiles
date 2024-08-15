@@ -2,6 +2,8 @@ vim.g.mapleader = " "
 
 local map = vim.keymap.set
 
+map("n", "<leader>\\", ":so ~/.config/nvim/init.lua<CR>")
+
 map({ "n", "v" }, "<leader>D", '"_D', { remap = false })
 map({ "n", "v" }, "<leader>d", '"_d', { remap = false })
 
