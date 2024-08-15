@@ -168,17 +168,6 @@ export GOPATH=$HOME/go
 export GOBIN=$HOME/go/bin
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
-fpath=($HOME/.config/zsh/pure $fpath)
-autoload -U promptinit; promptinit
-autoload -U compinit; compinit
-
-_comp_options+=(globdots) # With hidden files
-
-zstyle :prompt:pure:git:stash show yes
-zstyle :prompt:pure:path color cyan
-
-prompt pure
-
 eval "$(zoxide init --cmd cd zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
