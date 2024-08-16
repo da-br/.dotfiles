@@ -136,8 +136,7 @@ export GOPATH=$HOME/go
 export GOBIN=$HOME/go/bin
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
-fpath=($HOME/.config/zsh $fpath)
-autoload -Uz prompt_purification_setup && prompt_purification_setup
+export PATH="$PATH:/opt/nvim-linux64/bin"
 
 eval "$(zoxide init --cmd cd zsh)"
 
