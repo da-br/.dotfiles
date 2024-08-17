@@ -1,5 +1,8 @@
-# ZSH_THEME="robbyrussell"
-ZSH_THEME=""
+ZSH="$HOME/.oh-my-zsh"
+
+ZSH_THEME="robbyrussell"
+
+source "$ZSH/oh-my-zsh.sh"
 
 # vim mapping
 bindkey -v
@@ -164,9 +167,11 @@ export ANDROID_HOME=$HOME/AndroidSdk
 export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
 
 export GOROOT=/usr/local/go
-export GOPATH=$HOME/go
-export GOBIN=$HOME/go/bin
+export GOPATH=$HOME/.go
+export GOBIN=$HOME/.go/bin
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+
+export PATH="$HOME/.zig:$PATH"
 
 eval "$(zoxide init --cmd cd zsh)"
 

@@ -10,6 +10,6 @@ startup_script = "~/.config/sesh/scripts/dev.sh"
 
 
 [[session]]
-name = "algo"
-path = "~/Dev/Projects/Algo"
+name = "qiatt"
+path = "~/Dev/Projects/qiatt"
 startup_script = "~/.config/sesh/scripts/dev.sh"
