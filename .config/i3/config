@@ -9,6 +9,9 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
+# exec_always killall polybar
+# exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
 set $mod Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
