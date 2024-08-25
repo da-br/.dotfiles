@@ -171,7 +171,7 @@ export GOPATH=$HOME/.go
 export GOBIN=$HOME/.go/bin
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
-export PATH="$HOME/.zig:$PATH"
+export PATH="$HOME/.zig/zig:$PATH"
 
 eval "$(zoxide init --cmd cd zsh)"
 
