@@ -1,0 +1,12 @@
+# Source common settings
+[ -f ~/.profile ] && source ~/.profile
+
+eval "$(zoxide init bash)"
+
+. C\:/Program\ Files/Git/mingw64/share/git/completion/git-completion.bash
+
+source <(kubectl completion bash)
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+PROMPT_COMMAND='history -a'
