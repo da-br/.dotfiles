@@ -14,6 +14,7 @@ alias rgw='rg --path-separator //'
 alias rgf='rg --files'
 alias sl='sesh connect $(sesh list -c | fzf)  '
 alias lg='lazygit'
+alias xopen='xdg-open'
 
 load_secrets() {
     local encrypted_file="$HOME/.secrets/.env.gpg"
@@ -132,11 +133,12 @@ export ANDROID_HOME=$HOME/AndroidSdk
 export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
 
 export GOROOT=/usr/local/go
-export GOPATH=$HOME/go
-export GOBIN=$HOME/go/bin
+export GOPATH=$HOME/.go
+export GOBIN=$HOME/.go/bin
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
 export PATH="$PATH:/opt/nvim-linux64/bin"
+export PATH="$HOME/.zig/zig:$PATH"
 
 eval "$(zoxide init --cmd cd zsh)"
 

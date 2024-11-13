@@ -35,6 +35,48 @@ return {
 				},
 			})
 
+			dap.adapters.lldb = {
+				type = "executable",
+				command = "/usr/bin/lldb-dap-18", -- adjust as needed, must be absolute path
+				name = "lldb",
+			}
+
+			dap.configurations.zig = {
+				{
+					name = "Launch",
+					type = "lldb",
+					request = "launch",
+					program = "${workspaceFolder}/zig-out/bin/${workspaceFolderBasename}",
+					cwd = "${workspaceFolder}",
+					stopOnEntry = false,
+					args = {},
+				},
+				-- {
+				-- 	name = "Launch",
+				-- 	type = "lldb",
+				-- 	request = "launch",
+				-- 	program = function()
+				-- 		return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/zig-out/bin/", "file")
+				-- 	end,
+				-- 	cwd = "${workspaceFolder}",
+				-- 	stopOnEntry = false,
+				-- 	args = {},
+				--
+				-- 	-- 💀
+				-- 	-- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
+				-- 	--
+				-- 	--    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+				-- 	--
+				-- 	-- Otherwise you might get the following error:
+				-- 	--
+				-- 	--    Error on launch: Failed to attach to the target process
+				-- 	--
+				-- 	-- But you should be aware of the implications:
+				-- 	-- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
+				-- 	-- runInTerminal = false,
+				-- },
+			}
+
 			require("nvim-dap-virtual-text").setup()
 
 			-- Eval var under cursor
@@ -55,7 +97,9 @@ return {
 				require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
 			end, { desc = "<S-F9> Stop Debug" })
 			vim.keymap.set("n", "<F70>", dap.run_to_cursor) -- <C-F10>
+			vim.keymap.set("n", "<leader>dc", dap.run_to_cursor) -- <C-F10>
 			vim.keymap.set("n", "<F82>", dap.goto_) -- <C-S-F10>
+			vim.keymap.set("n", "<leader>ds", dap.goto_) -- <C-S-F10>
 			vim.keymap.set("n", "<F10>", dap.step_over)
 			vim.keymap.set("n", "<F11>", dap.step_into)
 			vim.keymap.set("n", "<F23>", dap.step_out)
