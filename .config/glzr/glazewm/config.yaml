@@ -81,6 +81,14 @@ workspaces:
   - name: '9'
 
 window_rules:
+  - commands: ["move --workspace 2"]
+    match:
+      - window_process: { equals: "JetBrains Rider" }
+
+  - commands: ["move --workspace 9"]
+    match:
+      - window_process: { equals: "mRemoteNG" }
+
   - commands: ['ignore']
     match:
       # Ignores any Zebar windows.
