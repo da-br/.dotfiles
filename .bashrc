@@ -7,6 +7,8 @@ eval "$(zoxide init --cmd cd bash)"
 
 source <(kubectl completion bash)
 
+alias xopen='start'
+
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 PROMPT_COMMAND='history -a'
