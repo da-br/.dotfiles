@@ -11,10 +11,7 @@ plugins=(git git-auto-fetch tmux)
 
 source $ZSH/oh-my-zsh.sh
 
-source ~/.profile
-
 alias sl='sesh connect $(sesh list -c | fzf)  '
-alias lg='lazygit'
 alias xopen='xdg-open'
 
 eval "$(zoxide init --cmd cd zsh)"

@@ -1,7 +1,7 @@
 # Source common settings
 [ -f ~/.profile ] && source ~/.profile
 
-eval "$(zoxide init bash)"
+eval "$(zoxide init --cmd cd bash)"
 
 . C\:/Program\ Files/Git/mingw64/share/git/completion/git-completion.bash
 

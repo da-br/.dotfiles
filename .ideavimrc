@@ -36,12 +36,6 @@ set notimeout
 nnoremap <A-n> :tabnext<CR>
 nnoremap <A-p> :tabprev<CR>
 
-"" Pane navigation
-nnoremap <A-h> <C-w>h
-nnoremap <A-l> <C-w>l
-nnoremap <A-k> <C-w>k
-nnoremap <A-j> <C-w>j
-
 "" Easy visual indentation
 vnoremap < <gv
 vnoremap > >gv
@@ -55,7 +49,7 @@ if has('ide')
         map <leader>tl <action>(RiderUnitTestRepeatPreviousRunAction)
         map ]e <action>(ReSharperGotoNextErrorInSolution)
         map [e <action>(ReSharperGotoPrevErrorInSolution)
-        map <leader>xs <action>(ShowErrorDescription)
+        map <leader>xs <action>(Rider.ProblemsView.ErrorsInSolution)
     elseif &ide =~? 'goland'
         map ]e <Action>(GotoNextError)
         map [e <Action>(GotoPrevError)
@@ -105,10 +99,10 @@ map s <Plug>(easymotion-s)
 map <leader>fe :NERDTreeToggle<CR>
 
 "" Folding
-map <leader>zc :action CollapseRegion<CR>
-map <leader>zo :action ExpandRegion<CR>
-map <leader>zC :action CollapseAllRegions<CR>
-map <leader>zO :action ExpandAllRegions<CR>
+map <leader>zc <action>(CollapseRegion)
+map <leader>zo <action>(ExpandRegion)
+map <leader>zC <action>(CollapseAllRegions)
+map <leader>zO <action>(ExpandAllRegions)
 
 "" Window splits
 map <leader>wv <action>(SplitVertically)
@@ -121,7 +115,7 @@ map <leader>ca <action>(ShowIntentionActions)
 map <leader><leader> <action>(SearchEverywhere)
 map <leader>/ <action>(Find)
 
-map <leader>cd :action ShowHoverInfo<CR>
+map <leader>cd <Action>(ShowHoverInfo)
 
 map <leader>fs <C-M-F12>
 
@@ -164,5 +158,8 @@ nmap <leader>ha <action>(HarpoonerAddFile)
 "" Spelling 
 nmap z= <action>(SpellingPopupActionGroup)
 
+"" Views
+nmap <leader>ds <action>(ActivateDebugToolWindow)
 
-"" 
+"" to find action ids -> track action ids
+nmap <leader>af <action>(VimFindActionIdAction)
