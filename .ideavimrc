@@ -34,7 +34,6 @@ set notimeout
 
 "" Tab navigation
 nnoremap <A-n> :tabnext<CR>
-nnoremap <A-p> :tabprev<CR>
 
 "" Easy visual indentation
 vnoremap < <gv
@@ -69,12 +68,12 @@ nmap gn <action>(Forward)
 nmap gp <action>(Back)
 
 "" Easy lines moves
-nnoremap <A-j> :m .+1<CR>==
-nnoremap <A-k> :m .-2<CR>==
-inoremap <A-j> <Esc>:m .+1<CR>==gi
-inoremap <A-k> <Esc>:m .-2<CR>==gi
-vnoremap <A-j> :m '>+1<CR>gv=gv
-vnoremap <A-k> :m '<-2<CR>gv=gv
+"" nnoremap <A-j> :m .+1<CR>==
+"" nnoremap <A-k> :m .-2<CR>==
+"" inoremap <A-j> <Esc>:m .+1<CR>==gi
+"" inoremap <A-k> <Esc>:m .-2<CR>==gi
+"" vnoremap <A-j> :m '>+1<CR>gv=gv
+"" vnoremap <A-k> :m '<-2<CR>gv=gv
 
 "" Leader commands
 "" ========================================================
@@ -96,7 +95,7 @@ vnoremap <leader>d "_d
 map s <Plug>(easymotion-s)
 
 "" Open NERDTree (use q to exit)
-map <leader>fe :NERDTreeToggle<CR>
+map <leader>es :NERDTreeToggle<CR>
 
 "" Folding
 map <leader>zc <action>(CollapseRegion)
@@ -117,14 +116,13 @@ map <leader>/ <action>(Find)
 
 map <leader>cd <Action>(ShowHoverInfo)
 
-map <leader>fs <C-M-F12>
-
-"" File navigation
+"" Finds
 map <leader>ff <Action>(GotoFile)
 map <leader>fr <Action>(RecentFiles)
 map <leader>fc <Action>(FindInPath)
 map <leader>fl <Action>(RecentLocations)
 map <leader>fw <Action>(FindWordAtCaret)
+map <leader>fs <Action>(ActivateFindToolWindow)
 
 "" Close active tab
 map <leader>bd <action>(CloseContent)
@@ -156,7 +154,7 @@ nmap <leader>hs <action>(HarpoonerQuickMenu)
 nmap <leader>ha <action>(HarpoonerAddFile)
 
 "" Spelling 
-nmap z= <action>(SpellingPopupActionGroup)
+"" nmap z= <action>(SpellingPopupActionGroup)
 
 "" Views
 nmap <leader>ds <action>(ActivateDebugToolWindow)
