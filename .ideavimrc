@@ -72,18 +72,18 @@ nnoremap <C-j> :m .+1<CR>==
 nnoremap <C-k> :m .-2<CR>==
 inoremap <C-j> <Esc>:m .+1<CR>==gi
 inoremap <C-k> <Esc>:m .-2<CR>==gi
-vnoremap <C-j> :m '>+1<CR>gv=gv
 vnoremap <C-k> :m '<-2<CR>gv=gv
+vnoremap <C-j> :m '>+1<CR>gv=gv
 
 "" Leader commands
 "" ========================================================
 
 "" Coping and pasting
-nnoremap <C-C> "+yy
-vnoremap <C-C> "+y
+"" nnoremap <C-C> "+yy
+"" vnoremap <C-C> "+y
 
-nnoremap <C-V>p "+p
-vnoremap <C-V>p "+p
+"" nnoremap <C-V> "+p
+"" vnoremap <C-V> "+p
 nnoremap <leader>P "+P
 vnoremap <leader>P "+P
 
@@ -153,7 +153,7 @@ map <leader>sa <action>(Annotate)
 "" Tests
 map <leader>ts <action>(ActivateUnitTestsToolWindow)
 
-"" Harpoon
+"" Harpooner
 nmap <leader>h1 <action>(HarpoonerOpenFile0)
 nmap <leader>h2 <action>(HarpoonerOpenFile1)
 nmap <leader>h3 <action>(HarpoonerOpenFile2)
@@ -163,11 +163,29 @@ nmap <leader>h5 <action>(HarpoonerOpenFile4)
 nmap <leader>hs <action>(HarpoonerQuickMenu)
 nmap <leader>ha <action>(HarpoonerAddFile)
 
+"" HarpoonIJ
+"" nmap <leader>h1 <action>(GotoHarpoon0)
+"" nmap <leader>h2 <action>(GotoHarpoon1)
+"" nmap <leader>h3 <action>(GotoHarpoon2)
+"" nmap <leader>h4 <action>(GotoHarpoon3)
+"" nmap <leader>h5 <action>(GotoHarpoon4)
+
+"" nmap <leader>hs <action>(ShowHarpoon)
+"" nmap <leader>ha <action>(AddToHarpoon)
+
 "" Spelling 
 "" nmap z= <action>(SpellingPopupActionGroup)
 
 "" Views
-nmap <leader>ds <action>(ActivateDebugToolWindow)
+nmap <leader>is <action>(NavigateToImmediateWindow)
 
-"" to find action ids -> track action ids
-nmap <leader>af <action>(VimFindActionIdAction)
+"" Debugging 
+nmap <leader>ds <action>(ActivateDebugToolWindow)
+nmap <C-F11> <action>(JumpToStatement)
+
+
+"" vim things
+nmap <leader>vf <action>(VimFindActionIdAction)
+nmap <leader>vs :e ~/.ideavimrc <CR>
+nmap <leader>vr :source ~/.ideavimrc <CR>
+

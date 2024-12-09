@@ -58,6 +58,12 @@ ffd() {
   [[ -n "$selected_file" ]] && cd "$selected_file"
 }
 
+fcd() {
+  local dir
+  dir=$(fd --type d --hidden --exclude .git . | fzf --height 40% --reverse --preview 'ls -1 {}') || return
+  cd "$dir" || return
+}
+
 gfp() {
   # Check if the file argument is provided
   if [[ -z $1 ]]; then
