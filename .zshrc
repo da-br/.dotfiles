@@ -26,7 +26,10 @@ source <(fzf --zsh)
 
 export FPATH="~/.eza/completions/zsh:$FPATH"
 
-ld='eza -l --only-dirs'
-lf='eza -l --only-files --color=always'
-ls='eza -alF --color=always --git --icons --sort=modified'
-ln='eza -alF --color=always --git --icons --sort=name'
+alias la='eza -al --git --color=always'
+alias ls='eza -al --color=always --git --git-ignore --icons --sort=modified'
+alias ld='eza -l --only-dirs'
+alias lf='eza -l --only-files --color=always'
+alias ln='eza -al --color=always --git --git-ignore --icons --sort=name'
+alias lsd='eza -al --group-directories-first --color=always --git --git-ignore --icons --sort=name'
+alias lsf='eza -al --group-directories-last --color=always --git --git-ignore --icons --sort=name'
