@@ -4,7 +4,7 @@
 sudo apt update && sudo apt upgrade -y
 
 # Install common packages
-sudo apt install -y curl git vim zsh build-essential wget ripgrep zoxide fd-find stow fzf
+sudo apt install -y curl git vim zsh build-essential wget ripgrep fd-find stow
 
 # Optional: Set Zsh as default shell
 chsh -s $(which zsh)
@@ -19,7 +19,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 # sudo apt install -y golang-go 
 
 # Configure development environment
-# Example: Git config
+# Git
 git config --global user.name "Daniel Brandenburg"
 git config --global user.email "brandendj@gmail.com"
 
@@ -32,6 +32,29 @@ sudo install lazygit -D -t /usr/local/bin/
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
 sudo rm -rf /opt/nvim
 sudo tar -C /opt -xzf nvim-linux64.tar.gz
+
+# Windows setup
+if grep -q "microsoft" /proc/version && grep -q "WSL2" /proc/sys/kernel/osrelease; then
+    echo "Running on WSL2"
+
+    # use windows credential helper
+    git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager.exe"
+
+    # install luarocks for nvim
+    sudo apt install luarocks
+else
+    echo "Not running on WSL2"
+fi
+
+# fzf
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
+
+# zoxide
+curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+
+#fd-find
+ln -s $(which fdfind) ~/.local/bin/fd
 
 # Cleanup
 sudo apt autoremove -y
