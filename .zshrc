@@ -23,3 +23,10 @@ if [[ ! "$PATH" == */home/dabr/.fzf/bin* ]]; then
 fi
 
 source <(fzf --zsh)
+
+export FPATH="~/.eza/completions/zsh:$FPATH"
+
+ld='eza -l --only-dirs'
+lf='eza -l --only-files --color=always'
+ls='eza -alF --color=always --git --icons --sort=modified'
+ln='eza -alF --color=always --git --icons --sort=name'
