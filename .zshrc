@@ -13,6 +13,7 @@ source $ZSH/oh-my-zsh.sh
 
 alias sl='sesh connect $(sesh list -c | fzf)  '
 alias xopen='xdg-open'
+alias xopen='xdg-open'
 
 eval "$(zoxide init --cmd cd zsh)"
 

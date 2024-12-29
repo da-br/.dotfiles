@@ -4,6 +4,11 @@ path = "~/.dotfiles"
 startup_script = "~/.config/sesh/scripts/dotfiles.sh"
 
 [[session]]
+name = "cvs"
+path = "~/Dev/Projects/cvs"
+startup_script = "~/.config/sesh/scripts/dev.sh"
+
+[[session]]
 name = "metqly"
 path = "~/Dev/Projects/metql"
 startup_script = "~/.config/sesh/scripts/dev.sh"
@@ -13,3 +18,9 @@ startup_script = "~/.config/sesh/scripts/dev.sh"
 name = "qiatt"
 path = "~/Dev/Projects/qiatt"
 startup_script = "~/.config/sesh/scripts/dev.sh"
+
+
+[[session]]
+name = "slowmarket"
+path = "~/Dev/Projects/SlowMarket"
+startup_script = "~/.config/sesh/scripts/dev_server.sh"
