@@ -79,11 +79,11 @@ vnoremap <C-j> :m '>+1<CR>gv=gv
 "" ========================================================
 
 "" Coping and pasting
-"" nnoremap <C-C> "+yy
-"" vnoremap <C-C> "+y
+nnoremap <C-C> "+yy
+vnoremap <C-C> "+y
 
-"" nnoremap <C-V> "+p
-"" vnoremap <C-V> "+p
+nnoremap <C-V> "+p
+vnoremap <C-V> "+p
 nnoremap <leader>P "+P
 vnoremap <leader>P "+P
 
