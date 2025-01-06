@@ -1,91 +1,238 @@
-local wezterm = require 'wezterm'
+--- wezterm.lua
+--- $ figlet -f small Wezterm
+--- __      __      _
+--- \ \    / /__ __| |_ ___ _ _ _ __
+---  \ \/\/ / -_)_ /  _/ -_) '_| '  \
+---   \_/\_/\___/__|\__\___|_| |_|_|_|
+---
+--- My Wezterm config file
 
--- The only required line is this one.
-local wezterm = require 'wezterm'
-local mux = wezterm.mux
+local wezterm = require("wezterm")
 local act = wezterm.action
--- Some empty tables for later use
+
 local config = {}
-local mouse_bindings = {}
+-- Use config builder object if possible
+if wezterm.config_builder then config = wezterm.config_builder() end
+
 local launch_menu = {}
 
+-- Settings
+config.default_prog = { "C:\\Program Files\\Git\\bin\\bash.exe" }
 if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
   config.default_prog = { "C:\\Program Files\\Git\\bin\\bash.exe" }
   table.insert(launch_menu, {
-    label = 'PowerShell',
-    args = { 'powershell.exe', '-NoLogo' },
-  })
-  table.insert(launch_menu, {
     label = 'Pwsh',
     args = { 'pwsh.exe', '-NoLogo' },
+  })
+  table.insert(launch_menu, {
+    label = 'PowerShell',
+    args = { 'powershell.exe', '-NoLogo' },
   })
 else
   config.default_prog = { '/usr/local/bin/zsh' }
 end
 
+config.window_decorations = "RESIZE"
+config.window_close_confirmation = "AlwaysPrompt"
+config.scrollback_lines = 3000
+config.default_workspace = "main"
 config.launch_menu = launch_menu
 config.audible_bell = "Disabled"
 config.animation_fps = 1
 config.cursor_blink_ease_in = "Constant"
 config.cursor_blink_ease_out = "Constant"
 config.default_cursor_style = "BlinkingBlock"
-config.enable_tab_bar = true
-config.window_decorations = "RESIZE"   -- Show window borders and buttons
 config.font_size = 12.0               -- Set the font size to 12
 config.line_height = 1               -- Set the line height for better readability
 
-config.leader = { key = "a", mods = "CTRL"  }
+-- Dim inactive panes
+config.inactive_pane_hsb = {
+  saturation = 0.24,
+  brightness = 0.5
+}
 
--- CTRL + SHIFT + ARROW = switch panes
-local mykeys = {}
+-- Keys
+config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
+config.keys = {
 
-for i = 1, 8 do
-	-- CTRL+ALT + number to activate that tab
-	table.insert(mykeys, {
-		key = tostring(i),
-		mods = "LEADER",
-		action = act({ ActivateTab = i - 1 }),
-	})
+  -- Send C-a when pressing C-a twice
+  { key = "a",          mods = "LEADER|CTRL", action = act.SendKey { key = "a", mods = "CTRL" } },
+  { key = "c",          mods = "LEADER",      action = act.ActivateCopyMode },
+  { key = 'A',          mods = 'CTRL',        action = act.ActivateCommandPalette, },
+
+  -- Pane keybindings
+  { key = "s",          mods = "LEADER",      action = act.SplitVertical { domain = "CurrentPaneDomain" } },
+  { key = "v",          mods = "LEADER",      action = act.SplitHorizontal { domain = "CurrentPaneDomain" } },
+  { key = "h",          mods = "LEADER",      action = act.ActivatePaneDirection("Left") },
+  { key = "j",          mods = "LEADER",      action = act.ActivatePaneDirection("Down") },
+  { key = "k",          mods = "LEADER",      action = act.ActivatePaneDirection("Up") },
+  { key = "l",          mods = "LEADER",      action = act.ActivatePaneDirection("Right") },
+  { key = "q",          mods = "LEADER",      action = act.CloseCurrentPane { confirm = true } },
+  { key = "z",          mods = "LEADER",      action = act.TogglePaneZoomState },
+  { key = "o",          mods = "LEADER",      action = act.RotatePanes "Clockwise" },
+  -- We can make separate keybindings for resizing panes
+  -- But Wezterm offers custom "mode" in the name of "KeyTable"
+  { key = "R",          mods = "LEADER",      action = act.ActivateKeyTable { name = "resize_pane", one_shot = false } },
+
+  -- Tab keybindings
+  { key = 'q',          mods = 'LEADER',      action = wezterm.action.CloseCurrentTab { confirm = true },},
+  { key = "t",          mods = "LEADER",      action = act.SpawnTab("CurrentPaneDomain") },
+  { key = "[",          mods = "LEADER",      action = act.ActivateTabRelative(-1) },
+  { key = "]",          mods = "LEADER",      action = act.ActivateTabRelative(1) },
+  { key = "n",          mods = "LEADER",      action = act.ShowTabNavigator },
+  {
+    key = "n",
+    mods = "LEADER",
+    action = act.PromptInputLine {
+      description = wezterm.format {
+        { Attribute = { Intensity = "Bold" } },
+        { Foreground = { AnsiColor = "Fuchsia" } },
+        { Text = "Renaming Tab Title...:" },
+      },
+      action = wezterm.action_callback(function(window, pane, line)
+        if line then
+          window:active_tab():set_title(line)
+        end
+      end)
+    }
+  },
+  {
+    key = "N",
+    mods = "LEADER",
+    action = act.PromptInputLine {
+      description = wezterm.format {
+        { Attribute = { Intensity = "Bold" } },
+        { Foreground = { AnsiColor = "Fuchsia" } },
+        { Text = "Renaming Workspace...:" },
+      },
+      action = wezterm.action_callback(function(window, pane, line)
+        if line then
+          wezterm.mux.rename_workspace(
+            wezterm.mux.get_active_workspace(),
+            line
+          )
+        end
+      end)
+    }
+  },
+  -- Key table for moving tabs around
+  { key = "m", mods = "LEADER",       action = act.ActivateKeyTable { name = "move_tab", one_shot = false } },
+  -- Or shortcuts to move tab w/o move_tab table. SHIFT is for when caps lock is on
+  { key = "{", mods = "LEADER|SHIFT", action = act.MoveTabRelative(-1) },
+  { key = "}", mods = "LEADER|SHIFT", action = act.MoveTabRelative(1) },
+
+  -- Lastly, workspace
+  { key = "W", mods = "LEADER",       action = act.ShowLauncherArgs { flags = "FUZZY|WORKSPACES" } },
+  { key = "w", mods = "LEADER",       action = act.ShowLauncher },
+
+}
+-- I can use the tab navigator (LDR t), but I also want to quickly navigate tabs with index
+for i = 1, 9 do
+  table.insert(config.keys, {
+    key = tostring(i),
+    mods = "LEADER",
+    action = act.ActivateTab(i - 1)
+  })
 end
 
--- wezterm.on('update-right-status', function(window, pane)
---   local leader = ''
---   if window:leader_is_active() then
---     leader = 'LEADER'
---   end
---   window:set_right_status(leader)
--- end)
+config.key_tables = {
+  resize_pane = {
+    { key = "h",      action = act.AdjustPaneSize { "Left", 1 } },
+    { key = "j",      action = act.AdjustPaneSize { "Down", 1 } },
+    { key = "k",      action = act.AdjustPaneSize { "Up", 1 } },
+    { key = "l",      action = act.AdjustPaneSize { "Right", 1 } },
+    { key = "Escape", action = "PopKeyTable" },
+    { key = "Enter",  action = "PopKeyTable" },
+  },
+  move_tab = {
+    { key = "h",      action = act.MoveTabRelative(-1) },
+    { key = "j",      action = act.MoveTabRelative(-1) },
+    { key = "k",      action = act.MoveTabRelative(1) },
+    { key = "l",      action = act.MoveTabRelative(1) },
+    { key = "Escape", action = "PopKeyTable" },
+    { key = "Enter",  action = "PopKeyTable" },
+  }
+}
 
-table.insert(mykeys, { key = "n", mods = "LEADER", action = act({ SpawnTab = "CurrentPaneDomain" }) })
+-- Tab bar
+-- I don't like the look of "fancy" tab bar
+config.use_fancy_tab_bar = false
+config.status_update_interval = 1000
+config.tab_bar_at_bottom = false
+wezterm.on("update-status", function(window, pane)
+  -- Workspace name
+  local stat = window:active_workspace()
+  local stat_color = "#f7768e"
+  -- It's a little silly to have workspace name all the time
+  -- Utilize this to display LDR or current key table name
+  if window:active_key_table() then
+    stat = window:active_key_table()
+    stat_color = "#7dcfff"
+  end
+  if window:leader_is_active() then
+    stat = "LDR"
+    stat_color = "#bb9af7"
+  end
 
-table.insert(mykeys, { key = "f", mods = "LEADER", action = "ToggleFullScreen" })
+  local basename = function(s)
+    -- Nothing a little regex can't fix
+    return string.gsub(s, "(.*[/\\])(.*)", "%2")
+  end
 
-table.insert(mykeys, { key = "[", mods = "LEADER", action = act.MoveTabRelative(-1) })
-table.insert(mykeys, { key = "]", mods = "LEADER", action = act.MoveTabRelative(1) })
+  -- Current working directory
+  local cwd = pane:get_current_working_dir()
+  if cwd then
+    if type(cwd) == "userdata" then
+      -- Wezterm introduced the URL object in 20240127-113634-bbcac864
+      cwd = basename(cwd.file_path)
+    else
+      -- 20230712-072601-f4abf8fd or earlier version
+      cwd = basename(cwd)
+    end
+  else
+    cwd = ""
+  end
 
-table.insert(mykeys, { key = "H", mods = "LEADER", action = act({ SplitVertical = { domain = "CurrentPaneDomain" } }) })
-table.insert(
-	mykeys,
-	{ key = "V", mods = "LEADER", action = act({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) }
-)
+  -- Current command
+  local cmd = pane:get_foreground_process_name()
+  -- CWD and CMD could be nil (e.g. viewing log using Ctrl-Alt-l)
+  cmd = cmd and basename(cmd) or ""
 
-table.insert(mykeys, { key = "h", mods = "LEADER", action = act({ ActivatePaneDirection = "Left" }) })
-table.insert(mykeys, { key = "j", mods = "LEADER", action = act({ ActivatePaneDirection = "Down" }) })
-table.insert(mykeys, { key = "k", mods = "LEADER", action = act({ ActivatePaneDirection = "Up" }) })
-table.insert(mykeys, { key = "l", mods = "LEADER", action = act({ ActivatePaneDirection = "Right" }) })
+  -- Time
+  local time = wezterm.strftime("%H:%M")
 
-table.insert(mykeys, { key = "h", mods = "CTRL|ALT", action = act.AdjustPaneSize({ "Left", 1 }) })
-table.insert(mykeys, { key = "j", mods = "CTRL|ALT", action = act.AdjustPaneSize({ "Down", 1 }) })
-table.insert(mykeys, { key = "k", mods = "CTRL|ALT", action = act.AdjustPaneSize({ "Up", 1 }) })
-table.insert(mykeys, { key = "l", mods = "CTRL|ALT", action = act.AdjustPaneSize({ "Right", 1 }) })
+  -- Left status (left of the tab line)
+  window:set_left_status(wezterm.format({
+    { Foreground = { Color = stat_color } },
+    { Text = "  " },
+    { Text = wezterm.nerdfonts.oct_table .. "  " .. stat },
+    { Text = " |" },
+  }))
 
-table.insert(mykeys, { key = "c", mods = "LEADER", action = act.ActivateCopyMode })
+  -- Right status
+  window:set_right_status(wezterm.format({
+    -- Wezterm has a built-in nerd fonts
+    -- https://wezfurlong.org/wezterm/config/lua/wezterm/nerdfonts.html
+    { Text = wezterm.nerdfonts.md_folder .. "  " .. cwd },
+    { Text = " | " },
+    { Foreground = { Color = "#e0af68" } },
+    { Text = wezterm.nerdfonts.fa_code .. "  " .. cmd },
+    "ResetAttributes",
+    { Text = " | " },
+    { Text = wezterm.nerdfonts.md_clock .. "  " .. time },
+    { Text = "  " },
+  }))
+end)
 
-table.insert(mykeys, { key = "q", mods = "LEADER", action = act.QuickSelect })
+--[[ Appearance setting for when I need to take pretty screenshots
+config.enable_tab_bar = false
+config.window_padding = {
+  left = '0.5cell',
+  right = '0.5cell',
+  top = '0.5cell',
+  bottom = '0cell',
 
-table.insert(mykeys, { key = "s", mods = "LEADER", action = act.Search({ CaseSensitiveString = "" }) })
-
-config.font = wezterm.font("JetBrains Mono", { weight = "Medium", italic = false, stretch = "Normal" })
-config.keys = mykeys
+}
+--]]
 
 return config
