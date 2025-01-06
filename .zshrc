@@ -5,7 +5,8 @@ export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="robbyrussell"
 
-ENABLE_CORRECTION="true"
+unsetopt correct_all
+ENABLE_CORRECTION="false"
 
 plugins=(git git-auto-fetch tmux)
 
@@ -27,10 +28,8 @@ source <(fzf --zsh)
 
 export FPATH="~/.eza/completions/zsh:$FPATH"
 
-alias la='eza -al --git --color=always'
 alias ls='eza -al --color=always --git --git-ignore --icons --sort=modified'
-alias ld='eza -l --only-dirs'
-alias lf='eza -l --only-files --color=always'
-alias ln='eza -al --color=always --git --git-ignore --icons --sort=name'
+alias lsa='eza -al --git --color=always'
+alias lsn='eza -al --color=always --git --git-ignore --icons --sort=name'
 alias lsd='eza -al --group-directories-first --color=always --git --git-ignore --icons --sort=name'
 alias lsf='eza -al --group-directories-last --color=always --git --git-ignore --icons --sort=name'

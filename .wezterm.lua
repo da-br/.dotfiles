@@ -10,11 +10,10 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
 
+local launch_menu = {}
 local config = {}
 -- Use config builder object if possible
 if wezterm.config_builder then config = wezterm.config_builder() end
-
-local launch_menu = {}
 
 -- Settings
 config.default_prog = { "C:\\Program Files\\Git\\bin\\bash.exe" }
@@ -29,14 +28,13 @@ if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
     args = { 'powershell.exe', '-NoLogo' },
   })
 else
-  config.default_prog = { '/usr/local/bin/zsh' }
+  config.default_prog = { '/usr/bin/zsh' }
 end
 
-config.window_decorations = "RESIZE"
-config.window_close_confirmation = "AlwaysPrompt"
-config.scrollback_lines = 3000
-config.default_workspace = "main"
-config.launch_menu = launch_menu
+local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
+
+-- config.color_scheme = "Catppuccin Mocha"
+
 config.audible_bell = "Disabled"
 config.animation_fps = 1
 config.cursor_blink_ease_in = "Constant"
@@ -44,6 +42,12 @@ config.cursor_blink_ease_out = "Constant"
 config.default_cursor_style = "BlinkingBlock"
 config.font_size = 12.0               -- Set the font size to 12
 config.line_height = 1               -- Set the line height for better readability
+config.window_decorations = "RESIZE"
+config.window_close_confirmation = "AlwaysPrompt"
+config.scrollback_lines = 3000
+config.default_workspace = "main"
+config.font_size = 16.0               -- Set the font size to 12
+-- config.line_height = 1               -- Set the line height for better readability
 
 -- Dim inactive panes
 config.inactive_pane_hsb = {
@@ -224,15 +228,8 @@ wezterm.on("update-status", function(window, pane)
   }))
 end)
 
---[[ Appearance setting for when I need to take pretty screenshots
-config.enable_tab_bar = false
-config.window_padding = {
-  left = '0.5cell',
-  right = '0.5cell',
-  top = '0.5cell',
-  bottom = '0cell',
-
-}
---]]
-
+workspace_switcher.apply_to_config(config)
+config.launch_menu = launch_menu
 return config
+-- config.enable_tab_bar = true
+
