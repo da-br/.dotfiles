@@ -1,4 +1,5 @@
 -- Define an autocommand group for the yank highlight
+--
 local yank_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 
 -- Add the autocommand to the group

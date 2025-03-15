@@ -4,7 +4,13 @@ return {
 		{
 			"williamboman/mason.nvim",
 			opts = {
-				ensure_installed = { "goimports", "gofumpt" },
+				ensure_installed = {
+					"goimports",
+					"gofumpt",
+					"typescript-language-server",
+					"svelte-language-server",
+					"prettier",
+				},
 			},
 		},
 		"williamboman/mason-lspconfig.nvim",
@@ -36,7 +42,13 @@ return {
 				"gopls",
 				"jsonls",
 				"zls",
+				"tailwindcss",
+				"eslint",
+				"svelte",
+				"html",
+				"eslint",
 			},
+
 			handlers = {
 				function(server_name) -- default handler (optional)
 					require("lspconfig")[server_name].setup({
@@ -60,10 +72,43 @@ return {
 					vim.g.zig_fmt_autosave = 0
 				end,
 
-				["lua_ls"] = function()
+				lua_ls = function()
 					local lspconfig = require("lspconfig")
 					lspconfig.lua_ls.setup({
 						capabilities = capabilities,
+					})
+				end,
+
+				svelte = function()
+					require("lspconfig").svelte.setup({
+						capabilities = capabilities,
+						settings = {
+							svelte = {
+								plugin = {
+									svelte = {
+										enable = true,
+									},
+									html = {
+										enable = true,
+									},
+									css = {
+										enable = true,
+									},
+									typescript = {
+										enable = true,
+									},
+								},
+							},
+						},
+					})
+				end,
+
+				eslint = function()
+					require("lspconfig").eslint.setup({
+						capabilities = capabilities,
+						settings = {
+							validate = { "javascript", "typescript", "svelte" },
+						},
 					})
 				end,
 			},
