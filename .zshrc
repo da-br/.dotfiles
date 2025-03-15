@@ -33,3 +33,18 @@ alias lsa='eza -al --git --color=always'
 alias lsn='eza -al --color=always --git --git-ignore --icons --sort=name'
 alias lsd='eza -al --group-directories-first --color=always --git --git-ignore --icons --sort=name'
 alias lsf='eza -al --group-directories-last --color=always --git --git-ignore --icons --sort=name'
+
+# pnpm
+export PNPM_HOME="/home/dabr/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# bun completions
+[ -s "/home/dabr/.bun/_bun" ] && source "/home/dabr/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

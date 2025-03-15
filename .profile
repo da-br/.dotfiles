@@ -16,6 +16,8 @@ export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 export PATH="$PATH:/opt/nvim-linux64/bin"
 export PATH="$HOME/.zig/zig:$PATH"
 
+export PATH="$HOME/.tools/bin:$PATH"
+
 # ripgrep alias
 case "$(uname -s)" in
   Linux*)

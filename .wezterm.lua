@@ -16,7 +16,6 @@ local config = {}
 if wezterm.config_builder then config = wezterm.config_builder() end
 
 -- Settings
-config.default_prog = { "C:\\Program Files\\Git\\bin\\bash.exe" }
 if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
   config.default_prog = { "C:\\Program Files\\Git\\bin\\bash.exe" }
   table.insert(launch_menu, {
@@ -29,23 +28,20 @@ if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
   })
 else
   config.default_prog = { '/usr/bin/zsh' }
+  config.color_scheme = "Catppuccin Mocha"
 end
 
 local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
-
--- config.color_scheme = "Catppuccin Mocha"
+config.default_workspace = "main"
 
 config.audible_bell = "Disabled"
 config.animation_fps = 1
 config.cursor_blink_ease_in = "Constant"
 config.cursor_blink_ease_out = "Constant"
 config.default_cursor_style = "BlinkingBlock"
-config.font_size = 12.0               -- Set the font size to 12
-config.line_height = 1               -- Set the line height for better readability
 config.window_decorations = "RESIZE"
 config.window_close_confirmation = "AlwaysPrompt"
 config.scrollback_lines = 3000
-config.default_workspace = "main"
 config.font_size = 16.0               -- Set the font size to 12
 -- config.line_height = 1               -- Set the line height for better readability
 
