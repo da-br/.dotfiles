@@ -1,0 +1,117 @@
+---
+- name: Configure Arch-based system
+  hosts: localhost
+  become: yes
+  tasks:
+
+    - name: Install required packages
+      package:
+        name:
+          - ripgrep
+          - fd
+          - stow
+          - fzf
+          - zoxide
+          - eza
+          - lazygit
+          - go
+          - zig
+          - jetbrains-toolbox
+          - jetbrains-rider
+          - wezterm
+          - docker
+          - ttf-fira-code
+        state: present
+
+    - name: Enable fonts configuration
+      file:
+        path: "~/.config/fontconfig"
+        state: directory
+        mode: '0755'
+
+    - name: Install Brave browser extensions
+      command: >
+        brave --load-extension="aeblfdkhhhdcdjpifhhbdiojplfjncoa,dbepggeogbaibhgnhhndojpepiihcmeb"
+      ignore_errors: yes
+
+    - name: Install Neovim and set defaults
+      package:
+        name: neovim
+        state: present
+
+    - name: Ensure Neovim symlinks are in place
+      file:
+        src: "{{ ansible_env.HOME }}/.dotfiles/.config/nvim"
+        dest: "{{ ansible_env.HOME }}/.config/nvim"
+        state: link
+
+    - name: Install and configure ZSH
+      package:
+        name: zsh
+        state: present
+
+    - name: Set default shell to ZSH
+      user:
+        name: "{{ ansible_env.USER }}"
+        shell: /bin/zsh
+
+    - name: Install Oh My Zsh
+      shell: >
+        sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+      args:
+        creates: "{{ ansible_env.HOME }}/.oh-my-zsh"
+
+    - name: Configure Oh My Zsh plugins and theme
+      lineinfile:
+        path: "{{ ansible_env.HOME }}/.zshrc"
+        line: "ZSH_THEME=robbyrussell"
+        create: yes
+
+    - name: Configure Git user settings
+      git_config:
+        name: "{{ item.name }}"
+        value: "{{ item.value }}"
+        scope: global
+      loop:
+        - { name: "user.name", value: "Daniel Brandenburg" }
+        - { name: "user.email", value: "brandendj@gmail.com" }
+        - { name: "core.autocrlf", value: "false" }
+
+    - name: Create symlinks for dotfiles
+      file:
+        src: "{{ ansible_env.HOME }}/.dotfiles/{{ item }}"
+        dest: "{{ ansible_env.HOME }}/{{ item }}"
+        state: link
+      loop:
+        - .zshrc
+        - .config/wezterm
+        - .ideavimrc
+
+    - name: Set MIME application defaults
+      copy:
+        dest: "{{ ansible_env.HOME }}/.config/mimeapps.list"
+        content: |
+          [Default Applications]
+          text/html=brave-browser.desktop
+          x-scheme-handler/http=brave-browser.desktop
+          x-scheme-handler/https=brave-browser.desktop
+          x-scheme-handler/terminal=org.wezfurlong.wezterm.desktop
+
+    - name: Ensure Kanshi profiles exist
+      copy:
+        dest: "{{ ansible_env.HOME }}/.config/kanshi/config"
+        content: |
+          profile docked {
+            output DP-2 enable position 0,0
+            output eDP-1 disable
+          }
+          profile undocked {
+            output eDP-1 enable position 0,0
+          }
+
+    - name: Ensure Kanshi service is enabled
+      systemd:
+        name: kanshi
+        enabled: yes
+        state: started
+
