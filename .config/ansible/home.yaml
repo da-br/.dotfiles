@@ -7,38 +7,83 @@
     - name: Install required packages
       package:
         name:
+          - fastfetch
           - ripgrep
           - fd
           - stow
           - fzf
           - zoxide
           - eza
+          - unzip
+          - bat
+
           - lazygit
+          - neovim
+          - nnn
+          - vifm
+          - github-cli
+          
           - go
           - zig
-          - jetbrains-toolbox
+
+          - starship
           - wezterm
+          - fish
+
           - docker
-          - neovim
+          - docker-compose
+
           - kanshi
+
+          - vlc
+          - transmission-cli
+          - brave-browser
+          - obsidian 
         state: present
+
+    - name: Ensure the docker group exists
+      become: yes
+      group:
+        name: docker
+        state: present
+
+    - name: Add user to the docker group
+      become: yes
+      user:
+        name: "dabr"
+        groups: docker
+        append: yes
+
+    - name: Enable Docker socket activation for user
+      systemd:
+        name: docker.socket
+        state: started
+        enabled: yes
 
 - name: Configure Arch-based system
   hosts: localhost
   become: no
   tasks:
 
-    - name: Install Brave browser extensions
+    # - name: Install bun
+    #   ansible.builtin.shell: | 
+    #     curl -fsSL https://bun.sh/install | bash
+
+    - name: Install  from yay
       kewlfft.aur.aur:
-        name: brave-bin
+        name: "{{ item }}"
         use: yay
         state: present
+      loop: 
+        - jetbrains-toolbox
+        - superfile
+        - yay
 
-    - name: Ensure Neovim symlinks are in place
-      file:
-        src: "{{ ansible_env.HOME }}/.dotfiles/.config/nvim"
-        dest: "{{ ansible_env.HOME }}/.config/nvim"
-        state: link
+    - name: Install Jetbrains toolbox
+      kewlfft.aur.aur:
+        name: jetbrains-toolbox
+        use: yay
+        state: present
 
     - name: Configure Git user settings
       git_config:
@@ -48,17 +93,35 @@
       loop:
         - { name: "user.name", value: "Daniel Brandenburg" }
         - { name: "user.email", value: "brandendj@gmail.com" }
-        - { name: "core.autocrlf", value: "false" }
+        - { name: "core.autocrlf", value: "true" }
 
     - name: Create symlinks for dotfiles
       file:
         src: "{{ ansible_env.HOME }}/.dotfiles/{{ item }}"
         dest: "{{ ansible_env.HOME }}/{{ item }}"
         state: link
+        force: yes
+        follow: false
       loop:
+        - .config/nvim
+        - .config/fish
+        - .config/sway
+        - .config/fastfetch
         - .wezterm.lua
         - .ideavimrc
-        # - .zshrc
+        - .profile
+        - .starship.toml
+
+    - name: Set VLC as default for all video MIME types
+      command: xdg-mime default vlc.desktop {{ item }}
+      loop:
+        - video/mp4
+        - video/x-matroska
+        - video/x-msvideo
+        - video/x-flv
+        - video/quicktime
+        - video/x-ms-wmv
+        - video/webm
 
     - name: Set MIME application defaults
       copy:
@@ -75,42 +138,42 @@
         dest: "{{ ansible_env.HOME }}/.config/kanshi/config"
         content: |
           profile docked {
-            output DP-2 enable position 0,0
+            output DP-3 enable position 0,0
             output eDP-1 disable
           }
           profile undocked {
             output eDP-1 enable position 0,0
           }
-
-    - name: Ensure systemd user directory exists
-      file:
-        path: "{{ ansible_env.HOME }}/.config/systemd/user"
-        state: directory
-        mode: '0755'
-
-    - name: Ensure Kanshi service file exists
-      copy:
-        dest: "{{ ansible_env.HOME }}/.config/systemd/user/kanshi.service"
-        content: |
-          [Unit]
-          Description=Kanshi dynamic display configuration
-          Documentation=https://wayland.emersion.fr/kanshi/
-          PartOf=graphical-session.target
-
-          [Service]
-          Type=simple
-          ExecStart=/usr/bin/kanshi
-          Restart=always
-
-          [Install]
-          WantedBy=graphical-session.target
-        mode: '0644'
-    
-    - name: Ensure Kanshi service is enabled
-      systemd:
-        name: kanshi
-        enabled: yes
-        state: started
-        scope: user
-        daemon_reload: yes
+    #
+    # - name: Ensure systemd user directory exists
+    #   file:
+    #     path: "{{ ansible_env.HOME }}/.config/systemd/user"
+    #     state: directory
+    #     mode: '0755'
+    #
+    # - name: Ensure Kanshi service file exists
+    #   copy:
+    #     dest: "{{ ansible_env.HOME }}/.config/systemd/user/kanshi.service"
+    #     content: |
+    #       [Unit]
+    #       Description=Kanshi dynamic display configuration
+    #       Documentation=https://wayland.emersion.fr/kanshi/
+    #       PartOf=graphical-session.target
+    #
+    #       [Service]
+    #       Type=simple
+    #       ExecStart=/usr/bin/kanshi
+    #       Restart=always
+    #
+    #       [Install]
+    #       WantedBy=graphical-session.target
+    #     mode: '0644'
+    # 
+    # - name: Ensure Kanshi service is enabled
+    #   systemd:
+    #     name: kanshi
+    #     enabled: yes
+    #     state: started
+    #     scope: user
+    #     daemon_reload: yes
 

@@ -1,0 +1,44 @@
+# This file contains fish universal variable definitions.
+# VERSION: 3.0
+SETUVAR --export ANDROID_HOME:/home/dabr/AndroidSdk
+SETUVAR --export BUN_INSTALL:/home/dabr/\x2ebun
+SETUVAR --export DOTNET_ROOT:/home/dabr/\x2edotnet
+SETUVAR --export EDITOR:nvim
+SETUVAR --export GOBIN:/home/dabr/\x2ego/bin
+SETUVAR --export --path GOPATH:/home/dabr/\x2ego
+SETUVAR --export GOROOT:/usr/local/go
+SETUVAR --export JAVA_HOME:/usr/lib/jvm/default\x2djava
+SETUVAR --export PAGER:less
+SETUVAR --export --path PATH:/home/dabr/\x2etools/bin\x1e/home/dabr/\x2edotnet/tools\x1e/home/dabr/\x2edotnet\x1e/usr/local/bin\x1e/usr/bin
+SETUVAR --export TERMINAL:wezterm
+SETUVAR --export VISUAL:nvim
+SETUVAR __fish_initialized:3800
+SETUVAR fish_color_autosuggestion:brblack
+SETUVAR fish_color_cancel:\x2dr
+SETUVAR fish_color_command:normal
+SETUVAR fish_color_comment:red
+SETUVAR fish_color_cwd:green
+SETUVAR fish_color_cwd_root:red
+SETUVAR fish_color_end:green
+SETUVAR fish_color_error:brred
+SETUVAR fish_color_escape:brcyan
+SETUVAR fish_color_history_current:\x2d\x2dbold
+SETUVAR fish_color_host:normal
+SETUVAR fish_color_host_remote:yellow
+SETUVAR fish_color_normal:normal
+SETUVAR fish_color_operator:brcyan
+SETUVAR fish_color_param:cyan
+SETUVAR fish_color_quote:yellow
+SETUVAR fish_color_redirection:cyan\x1e\x2d\x2dbold
+SETUVAR fish_color_search_match:white\x1e\x2d\x2dbackground\x3dbrblack
+SETUVAR fish_color_selection:white\x1e\x2d\x2dbold\x1e\x2d\x2dbackground\x3dbrblack
+SETUVAR fish_color_status:red
+SETUVAR fish_color_user:brgreen
+SETUVAR fish_color_valid_path:\x2d\x2dunderline
+SETUVAR fish_key_bindings:fish_vi_key_bindings
+SETUVAR fish_pager_color_completion:normal
+SETUVAR fish_pager_color_description:yellow\x1e\x2di
+SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
+SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
+SETUVAR fish_pager_color_selected_background:\x2dr
+SETUVAR fish_user_paths:/home/dabr/\x2ebun/bin\x1e/home/dabr/\x2edotnet/tools\x1e/home/dabr/\x2edotnet

@@ -1,19 +1,17 @@
+eval "$(starship init zsh)"
+
 # Source common settings
 [ -f ~/.profile ] && source ~/.profile
 
-export ZSH="$HOME/.oh-my-zsh"
-
-ZSH_THEME="robbyrussell"
+# export ZSH="$HOME/.oh-my-zsh"
+# ZSH_THEME="robbyrussell"
+# source $ZSH/oh-my-zsh.sh
 
 unsetopt correct_all
 ENABLE_CORRECTION="false"
 
-plugins=(git git-auto-fetch tmux)
+plugins=(git git-auto-fetch)
 
-source $ZSH/oh-my-zsh.sh
-
-alias sl='sesh connect $(sesh list -c | fzf)  '
-alias xopen='xdg-open'
 alias xopen='xdg-open'
 
 eval "$(zoxide init --cmd cd zsh)"
@@ -33,14 +31,6 @@ alias lsa='eza -al --git --color=always'
 alias lsn='eza -al --color=always --git --git-ignore --icons --sort=name'
 alias lsd='eza -al --group-directories-first --color=always --git --git-ignore --icons --sort=name'
 alias lsf='eza -al --group-directories-last --color=always --git --git-ignore --icons --sort=name'
-
-# pnpm
-export PNPM_HOME="/home/dabr/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
 
 # bun completions
 [ -s "/home/dabr/.bun/_bun" ] && source "/home/dabr/.bun/_bun"
