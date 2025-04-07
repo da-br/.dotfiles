@@ -8,16 +8,21 @@ end
 
 # Aliases
 alias cat="bat"
-alias ls="eza -lah --icons"
+alias ls="eza --group-directories-last --all --long --header --no-user --git --icons"
+alias ld="eza --only-dirs --long --header --no-user --total-size --git-repos --icons"
 alias ff="fd"
 alias ffd="fd -t d"
-alias gfp="git fuzzy pick"
+alias gff="git fuzzy pick"
 
-alias lg='lazygit'
 alias ppp='echo $PATH | tr " " "\n"'
 alias sdn='systemctl poweroff'
 alias rsn='systemctl reboot'
+
 alias e='xdg-open'
+
+alias gui='lazygit'
+alias dui='lazydocker'
+alias sui='lazysql'
 
 
 # Initialize Oh My Zsh plugins in Fish equivalent
