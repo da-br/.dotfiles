@@ -16,6 +16,12 @@ export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 export PATH="$PATH:/opt/nvim-linux64/bin"
 export PATH="$HOME/.zig/zig:$PATH"
 
+alias ls='eza -al --color=always --git --git-ignore --icons --sort=modified'
+alias lna='eza -al --git --color=always'
+alias lsn='eza -al --color=always --git --git-ignore --icons --sort=name'
+alias lsd='eza -al --group-directories-first --color=always --git --git-ignore --icons --sort=name'
+alias lsf='eza -al --group-directories-last --color=always --git --git-ignore --icons --sort=name'
+
 # ripgrep alias
 case "$(uname -s)" in
   Linux*)
