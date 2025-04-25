@@ -5,8 +5,6 @@ return {
             "williamboman/mason.nvim",
             opts = {
                 ensure_installed = {
-                    "goimports",
-                    "gofumpt",
                     "typescript-language-server",
                     "svelte-language-server",
                     "prettier",
@@ -39,8 +37,9 @@ return {
         require("mason-lspconfig").setup({
             ensure_installed = {
                 "lua_ls",
-                "gopls",
-                "zls",
+                "volar",
+                "ts_ls",
+                "zls"
             },
 
             handlers = {
@@ -122,21 +121,7 @@ return {
 
         local servers = {
             bashls = true,
-            gopls = {
-                settings = {
-                    gopls = {
-                        hints = {
-                            assignVariableTypes = true,
-                            compositeLiteralFields = true,
-                            compositeLiteralTypes = true,
-                            constantValues = true,
-                            functionTypeParameters = true,
-                            parameterNames = true,
-                            rangeVariableTypes = true,
-                        },
-                    },
-                },
-            },
+            volar = { 'vue' },
         }
 
         vim.api.nvim_create_autocmd("LspAttach", {

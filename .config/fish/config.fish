@@ -1,4 +1,5 @@
 if status is-interactive
+    nvm install latest
     # Commands to run in interactive sessions can go here
 end
 
@@ -50,7 +51,6 @@ set -Ux GOBIN $HOME/.go/bin
 set -Ux DOTNET_ROOT $HOME/.dotnet
 set -Ux JAVA_HOME /usr/lib/jvm/default-java
 set -Ux BUN_INSTALL $HOME/.bun
-
 
 # Path exports
 fish_add_path $HOME/.local/bin
