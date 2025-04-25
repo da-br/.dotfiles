@@ -34,6 +34,23 @@ map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move Up" })
 
 -- save file
 map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
+map({ "n" }, "<leader>BD", function()
+	local current_buf = vim.api.nvim_get_current_buf() -- Get the current buffer
+	local buffers = vim.api.nvim_list_bufs() -- Get a list of all buffers
+
+	for _, buf in ipairs(buffers) do
+		if buf ~= current_buf and vim.api.nvim_buf_is_loaded(buf) then
+			-- Save the buffer if it's modified
+			if vim.api.nvim_buf_get_option(buf, "modified") then
+				vim.api.nvim_buf_call(buf, function()
+					vim.cmd("write")
+				end)
+			end
+			-- Close the buffer
+			vim.api.nvim_buf_delete(buf, {})
+		end
+	end
+end, { desc = "Save and Close all other buffers" })
 
 map("n", "<leader>bd", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
 

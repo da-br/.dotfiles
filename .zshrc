@@ -1,18 +1,17 @@
+eval "$(starship init zsh)"
+
 # Source common settings
 [ -f ~/.profile ] && source ~/.profile
 
-export ZSH="$HOME/.oh-my-zsh"
+# export ZSH="$HOME/.oh-my-zsh"
+# ZSH_THEME="robbyrussell"
+# source $ZSH/oh-my-zsh.sh
 
-ZSH_THEME="robbyrussell"
+unsetopt correct_all
+ENABLE_CORRECTION="false"
 
-ENABLE_CORRECTION="true"
+plugins=(git git-auto-fetch)
 
-plugins=(git git-auto-fetch tmux)
-
-source $ZSH/oh-my-zsh.sh
-
-alias sl='sesh connect $(sesh list -c | fzf)  '
-alias xopen='xdg-open'
 alias xopen='xdg-open'
 
 eval "$(zoxide init --cmd cd zsh)"

@@ -15,6 +15,7 @@ export GOBIN=$HOME/.go/bin
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 export PATH="$PATH:/opt/nvim-linux64/bin"
 export PATH="$HOME/.zig/zig:$PATH"
+export PATH="$HOME/.tools/bin:$PATH"
 
 alias ls='eza -al --color=always --git --git-ignore --icons --sort=modified'
 alias lna='eza -al --git --color=always'
