@@ -8,6 +8,8 @@ function fish_greeting
 end
 
 # Aliases
+alias node="bun"
+alias npm="bun"
 alias cat="bat"
 alias ls="eza --group-directories-last --all --long --header --no-user --git --icons"
 alias ld="eza --only-dirs --long --header --no-user --total-size --git-repos --icons"
@@ -46,8 +48,8 @@ set -Ux PAGER less
 set -Ux TERMINAL wezterm
 
 set -Ux GOROOT /usr/local/go
-set -Ux GOPATH $HOME/.go
-set -Ux GOBIN $HOME/.go/bin
+# set -Ux GOPATH $HOME/.go
+# set -Ux GOBIN $HOME/.go/bin
 set -Ux DOTNET_ROOT $HOME/.dotnet
 set -Ux JAVA_HOME /usr/lib/jvm/default-java
 set -Ux BUN_INSTALL $HOME/.bun
@@ -57,7 +59,7 @@ fish_add_path $HOME/.local/bin
 fish_add_path $DOTNET_ROOT
 fish_add_path $DOTNET_ROOT/tools
 fish_add_path $GOPATH/bin 
-fish_add_path $GOROOT/bin
+# fish_add_path $GOROOT/bin
 fish_add_path $JAVA_HOME/bin
 fish_add_path /opt/nvim-linux64/bin
 fish_add_path $HOME/.zig/zig

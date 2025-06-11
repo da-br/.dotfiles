@@ -96,7 +96,8 @@ vnoremap <leader>d "_d
 map s <Plug>(easymotion-s)
 
 "" Open NERDTree (use q to exit)
-map <leader>es :NERDTreeToggle<CR>
+map <leader>es :NERDTree<CR>
+map <leader>ed :NERDTreeClose<CR>
 
 "" Folding
 map <leader>zc <action>(CollapseRegion)
@@ -164,16 +165,6 @@ nmap <leader>h5 <action>(HarpoonerOpenFile4)
 nmap <leader>hs <action>(HarpoonerQuickMenu)
 nmap <leader>ha <action>(HarpoonerAddFile)
 
-"" HarpoonIJ
-"" nmap <leader>h1 <action>(GotoHarpoon0)
-"" nmap <leader>h2 <action>(GotoHarpoon1)
-"" nmap <leader>h3 <action>(GotoHarpoon2)
-"" nmap <leader>h4 <action>(GotoHarpoon3)
-"" nmap <leader>h5 <action>(GotoHarpoon4)
-
-"" nmap <leader>hs <action>(ShowHarpoon)
-"" nmap <leader>ha <action>(AddToHarpoon)
-
 "" Spelling 
 "" nmap z= <action>(SpellingPopupActionGroup)
 
@@ -189,4 +180,5 @@ nmap <C-F11> <action>(JumpToStatement)
 nmap <leader>vf <action>(VimFindActionIdAction)
 nmap <leader>vs :e ~/.ideavimrc <CR>
 nmap <leader>vr :source ~/.ideavimrc <CR>
+
 

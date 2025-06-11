@@ -35,6 +35,8 @@ include $HOME/.config/sway/config.d/*.conf
 
 # User config below
 
+bindsym $mod+v exec $clipboard
+
 bindsym $mod+F1 swayidle -w \
          timeout 3 'swaylock -f -c 000000' \
          timeout 10 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
