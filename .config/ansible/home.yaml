@@ -20,11 +20,8 @@
 
           - lazygit
           - neovim
-          - nnn
-          - vifm
           - github-cli
           
-          - go
           - zig
 
           - starship
@@ -36,7 +33,6 @@
 
           - kanshi
 
-          - vlc
           - transmission-cli
           - brave-browser
           - obsidian 
@@ -90,7 +86,7 @@
         - { name: "user.name", value: "Daniel Brandenburg" }
         - { name: "user.email", value: "brandendj@gmail.com" }
         - { name: "core.autocrlf", value: "false" }
-        - { name: "core.oel", value: "lf" }
+        # - { name: "core.oel", value: "lf" }
 
     - name: Create symlinks for dotfiles
       file:
@@ -109,16 +105,16 @@
         - .profile
         - .starship.toml
 
-    - name: Set VLC as default for all video MIME types
-      command: xdg-mime default vlc.desktop {{ item }}
-      loop:
-        - video/mp4
-        - video/x-matroska
-        - video/x-msvideo
-        - video/x-flv
-        - video/quicktime
-        - video/x-ms-wmv
-        - video/webm
+    # - name: Set VLC as default for all video MIME types
+    #   command: xdg-mime default vlc.desktop {{ item }}
+    #   loop:
+    #     - video/mp4
+    #     - video/x-matroska
+    #     - video/x-msvideo
+    #     - video/x-flv
+    #     - video/quicktime
+    #     - video/x-ms-wmv
+    #     - video/webm
 
     - name: Set MIME application defaults
       copy:

@@ -1,6 +1,6 @@
 if status is-interactive
-    nvm install latest
     # Commands to run in interactive sessions can go here
+    echo "this this working"
 end
 
 function fish_greeting
@@ -27,7 +27,6 @@ alias gui='lazygit'
 alias dui='lazydocker'
 alias sui='lazysql'
 
-
 # Initialize Oh My Zsh plugins in Fish equivalent
 function fish_user_key_bindings
     fzf_key_bindings
@@ -51,20 +50,26 @@ set -Ux GOROOT /usr/local/go
 # set -Ux GOPATH $HOME/.go
 # set -Ux GOBIN $HOME/.go/bin
 set -Ux DOTNET_ROOT $HOME/.dotnet
-set -Ux JAVA_HOME /usr/lib/jvm/default-java
+set -Ux JAVA_HOME /usr/lib/jvm/java-25-openjdk/
 set -Ux BUN_INSTALL $HOME/.bun
+set -Ux ANDROID_HOME $HOME/.android
 
 # Path exports
+set -e fish_user_paths
 fish_add_path $HOME/.local/bin
+fish_add_path $GOBIN
 fish_add_path $DOTNET_ROOT
 fish_add_path $DOTNET_ROOT/tools
-fish_add_path $GOPATH/bin 
-# fish_add_path $GOROOT/bin
 fish_add_path $JAVA_HOME/bin
+fish_add_path $ANDROID_HOME
+fish_add_path $GOROOT/bin
 fish_add_path /opt/nvim-linux64/bin
 fish_add_path $HOME/.zig/zig
 fish_add_path $HOME/.tools/bin
 fish_add_path $BUN_INSTALL/bin
+
+# Added by get-aspire-cli.sh
+fish_add_path $HOME/.aspire/bin
 
 # Source zoxide (autojump replacement)
 zoxide init fish --cmd cd | source
@@ -73,4 +78,5 @@ starship init fish | source
 
 # fzf key bindings (equivalent to `source (fzf --fish)`)
 fzf --fish | source
+
 

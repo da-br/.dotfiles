@@ -66,6 +66,7 @@ nmap gu <action>(ShowUsages)
 nmap gt <action>(GotoTest)
 nmap gn <action>(Forward)
 nmap gp <action>(Back)
+nmap gr <action>(GotoRelated)
 
 "" Easy lines moves
 nnoremap <C-j> :m .+1<CR>==
@@ -174,6 +175,10 @@ nmap <leader>is <action>(NavigateToImmediateWindow)
 "" Debugging 
 nmap <leader>ds <action>(ActivateDebugToolWindow)
 nmap <C-F11> <action>(JumpToStatement)
+
+"" Run 
+nmap <leader>rs <action>(ChooseRunConfiguration)
+nmap <leader>rb <action>(ExternalSystem.RefreshAllProjects)
 
 
 "" vim things

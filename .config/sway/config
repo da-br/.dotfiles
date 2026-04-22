@@ -19,6 +19,7 @@ include /etc/sway/definitions
 # user variables can override global definitions
 include $HOME/.config/sway/definitions.d/*.conf
 
+# some comment
 include /etc/sway/inputs/*
 
 # enable modes
@@ -33,15 +34,10 @@ include /etc/sway/config.d/*
 # user config
 include $HOME/.config/sway/config.d/*.conf
 
-# User config below
+# Stop wluma from running
+exec systemctl --user stop wluma
 
-bindsym $mod+v exec $clipboard
-
-bindsym $mod+F1 swayidle -w \
-         timeout 3 'swaylock -f -c 000000' \
-         timeout 10 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
-         before-sleep 'swaylock -f -c 000000'
-
+# idle
 exec swayidle -w \
          timeout 300 'swaylock -f -c 000000' \
          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
