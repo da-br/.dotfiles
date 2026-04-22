@@ -8,6 +8,7 @@ return {
                     "typescript-language-server",
                     "svelte-language-server",
                     "prettier",
+                    "eslint-lsp",
                 },
             },
         },
@@ -37,9 +38,9 @@ return {
         require("mason-lspconfig").setup({
             ensure_installed = {
                 "lua_ls",
-                "volar",
                 "ts_ls",
-                "zls"
+                "zls",
+                -- "svelte"
             },
 
             handlers = {
@@ -72,35 +73,182 @@ return {
                     })
                 end,
 
+                -- Enhanced Svelte configuration for SvelteKit
                 svelte = function()
                     require("lspconfig").svelte.setup({
                         capabilities = capabilities,
+                        root_dir = require("lspconfig").util.root_pattern("svelte.config.js", "svelte.config.mjs",
+                            "svelte.config.cjs", "package.json"),
                         settings = {
                             svelte = {
                                 plugin = {
                                     svelte = {
                                         enable = true,
+                                        compilerWarnings = {
+                                            ["a11y-accesskey"] = "ignore",
+                                            ["a11y-incorrect-aria-attribute-type"] = "ignore",
+                                            ["a11y-unknown-aria-attribute"] = "ignore",
+                                            ["a11y-hidden"] = "ignore",
+                                            ["a11y-misplaced-role"] = "ignore",
+                                            ["a11y-unknown-role"] = "ignore",
+                                            ["a11y-no-abstract-role"] = "ignore",
+                                            ["a11y-no-redundant-roles"] = "ignore",
+                                            ["a11y-role-has-required-aria-props"] = "ignore",
+                                            ["a11y-aria-props"] = "ignore",
+                                            ["a11y-no-interactive-element-to-noninteractive-role"] = "ignore",
+                                            ["a11y-positive-tabindex"] = "ignore",
+                                            ["a11y-invalid-attribute"] = "ignore",
+                                            ["a11y-missing-attribute"] = "ignore",
+                                            ["a11y-img-redundant-alt"] = "ignore",
+                                            ["a11y-label-has-associated-control"] = "ignore",
+                                            ["a11y-media-has-caption"] = "ignore",
+                                            ["a11y-distracting-elements"] = "ignore",
+                                            ["a11y-structure"] = "ignore",
+                                            ["a11y-mouse-events-have-key-events"] = "ignore",
+                                            ["a11y-missing-content"] = "ignore",
+                                        },
                                     },
                                     html = {
                                         enable = true,
+                                        completions = {
+                                            emmet = true,
+                                        },
                                     },
                                     css = {
                                         enable = true,
+                                        globals = true,
+                                        completions = {
+                                            emmet = true,
+                                        },
                                     },
                                     typescript = {
                                         enable = true,
+                                        diagnostics = { enable = true },
+                                        hover = { enable = true },
+                                        completions = { enable = true },
+                                        codeActions = { enable = true },
+                                        selectionRange = { enable = true },
+                                        signatureHelp = { enable = true },
+                                        semanticTokens = { enable = true },
                                     },
                                 },
                             },
                         },
+                        on_attach = function(client, bufnr)
+                            -- Disable formatting for Svelte files, let Prettier handle it
+                            client.server_capabilities.documentFormattingProvider = false
+                            client.server_capabilities.documentRangeFormattingProvider = false
+                        end,
+                    })
+                end,
+
+                -- TypeScript configuration optimized for SvelteKit
+                ts_ls = function()
+                    require("lspconfig").ts_ls.setup({
+                        capabilities = capabilities,
+                        root_dir = require("lspconfig").util.root_pattern("package.json", "tsconfig.json",
+                            "jsconfig.json"),
+                        init_options = {
+                            plugins = {
+                                {
+                                    name = "@vue/typescript-plugin",
+                                    location = "/usr/local/lib/node_modules/@vue/typescript-plugin",
+                                    languages = { "javascript", "typescript", "vue" },
+                                },
+                            },
+                        },
+                        filetypes = {
+                            "javascript",
+                            "javascriptreact",
+                            "javascript.jsx",
+                            "typescript",
+                            "typescriptreact",
+                            "typescript.tsx",
+                        },
+                        settings = {
+                            typescript = {
+                                inlayHints = {
+                                    includeInlayParameterNameHints = "all",
+                                    includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                                    includeInlayFunctionParameterTypeHints = true,
+                                    includeInlayVariableTypeHints = true,
+                                    includeInlayPropertyDeclarationTypeHints = true,
+                                    includeInlayFunctionLikeReturnTypeHints = true,
+                                    includeInlayEnumMemberValueHints = true,
+                                },
+                            },
+                            javascript = {
+                                inlayHints = {
+                                    includeInlayParameterNameHints = "all",
+                                    includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                                    includeInlayFunctionParameterTypeHints = true,
+                                    includeInlayVariableTypeHints = true,
+                                    includeInlayPropertyDeclarationTypeHints = true,
+                                    includeInlayFunctionLikeReturnTypeHints = true,
+                                    includeInlayEnumMemberValueHints = true,
+                                },
+                            },
+                        },
+                        on_attach = function(client, bufnr)
+                            -- Disable formatting for TS files, let Prettier handle it
+                            client.server_capabilities.documentFormattingProvider = false
+                            client.server_capabilities.documentRangeFormattingProvider = false
+                        end,
                     })
                 end,
 
                 eslint = function()
                     require("lspconfig").eslint.setup({
                         capabilities = capabilities,
+                        root_dir = require("lspconfig").util.root_pattern(
+                            ".eslintrc",
+                            ".eslintrc.js",
+                            ".eslintrc.cjs",
+                            ".eslintrc.yaml",
+                            ".eslintrc.yml",
+                            ".eslintrc.json",
+                            "eslint.config.js",
+                            "package.json"
+                        ),
                         settings = {
-                            validate = { "javascript", "typescript", "svelte" },
+                            codeAction = {
+                                disableRuleComment = {
+                                    enable = true,
+                                    location = "separateLine"
+                                },
+                                showDocumentation = {
+                                    enable = true
+                                }
+                            },
+                            codeActionOnSave = {
+                                enable = false,
+                                mode = "all"
+                            },
+                            experimental = {
+                                useFlatConfig = false
+                            },
+                            format = true,
+                            nodePath = "",
+                            onIgnoredFiles = "off",
+                            packageManager = "npm",
+                            problems = {
+                                shortenToSingleLine = false
+                            },
+                            quiet = false,
+                            rulesCustomizations = {},
+                            run = "onType",
+                            useESLintClass = false,
+                            validate = "on",
+                            workingDirectory = {
+                                mode = "location"
+                            }
+                        },
+                        filetypes = {
+                            "javascript",
+                            "javascriptreact",
+                            "typescript",
+                            "typescriptreact",
+                            "svelte"
                         },
                     })
                 end,
@@ -121,11 +269,9 @@ return {
 
         local servers = {
             bashls = true,
-            volar = { 'vue' },
         }
 
         vim.api.nvim_create_autocmd("LspAttach", {
-
             callback = function(args)
                 local bufnr = args.buf
                 local client = assert(vim.lsp.get_client_by_id(args.data.client_id), "must have valid client")
@@ -149,6 +295,7 @@ return {
 
                 vim.keymap.set("n", "<space>cr", vim.lsp.buf.rename, { buffer = 0 })
                 vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, { buffer = 0 })
+                vim.keymap.set("x", "<space>ca", vim.lsp.buf.range_code_action, { buffer = 0 })
 
                 -- Override server capabilities
                 if settings.server_capabilities then

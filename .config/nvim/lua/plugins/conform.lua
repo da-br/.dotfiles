@@ -1,23 +1,43 @@
 return {
-	{
-		"stevearc/conform.nvim",
-		config = function()
-			-- Autoformatting Setup
-			require("conform").setup({
-				formatters_by_ft = {
-					lua = { "stylua" },
-					go = { "goimports", "gofumpt" },
-				},
-			})
-			vim.api.nvim_create_autocmd("BufWritePre", {
-				callback = function(args)
-					require("conform").format({
-						bufnr = args.buf,
-						lsp_fallback = true,
-						quiet = true,
-					})
-				end,
-			})
-		end,
-	},
+    "stevearc/conform.nvim",
+    event = { "BufWritePre" },
+    cmd = { "ConformInfo" },
+    keys = {
+        {
+            "<C-Alt-Enter>",
+            function()
+                require("conform").format({ async = true, lsp_fallback = true })
+            end,
+            mode = "",
+            desc = "Format buffer",
+        },
+    },
+    opts = {
+        formatters_by_ft = {
+            javascript = { "prettier" },
+            typescript = { "prettier" },
+            javascriptreact = { "prettier" },
+            typescriptreact = { "prettier" },
+            svelte = { "prettier" },
+            css = { "prettier" },
+            scss = { "prettier" },
+            html = { "prettier" },
+            json = { "prettier" },
+            yaml = { "prettier" },
+            markdown = { "prettier" },
+            lua = { "stylua" },
+        },
+        default_format_opts = {
+            lsp_fallback = true,
+        },
+        format_on_save = {
+            timeout_ms = 500,
+            lsp_fallback = true,
+        },
+        formatters = {
+            prettier = {
+                prepend_args = { "--single-quote", "--jsx-single-quote" },
+            },
+        },
+    },
 }
