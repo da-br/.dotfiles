@@ -24,6 +24,7 @@ vim.opt.smartcase = true
 vim.opt.ignorecase = true
 
 vim.opt.termguicolors = true
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
 vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"

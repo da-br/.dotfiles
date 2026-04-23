@@ -10,6 +10,7 @@ return {
                 "vimdoc",
                 "c",
                 "lua",
+                "python",
                 "go",
                 "gomod",
                 "gowork",
@@ -38,6 +39,7 @@ return {
 
             indent = {
                 enable = true,
+                disable = { "python" },
             },
 
             highlight = {

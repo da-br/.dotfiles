@@ -13,16 +13,30 @@ return {
 		"mfussenegger/nvim-dap",
 		dependencies = {
 			"leoluz/nvim-dap-go",
+			"mfussenegger/nvim-dap-python",
 			"rcarriga/nvim-dap-ui",
 			"nvim-neotest/nvim-nio",
-			{ "williamboman/mason.nvim", opts = { ensure_installed = { "delve" } } },
+			{ "williamboman/mason.nvim", opts = { ensure_installed = { "delve", "debugpy" } } },
 			"theHamsta/nvim-dap-virtual-text",
 		},
 		config = function()
 			local dap = require("dap")
 			local ui = require("dapui")
 
+			local function project_python()
+				if vim.fn.executable("./.venv/bin/python") == 1 then
+					return "./.venv/bin/python"
+				end
+				return "python3"
+			end
+
+			local debugpy_python = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
+			if vim.fn.executable(debugpy_python) ~= 1 then
+				debugpy_python = project_python()
+			end
+
 			require("dapui").setup()
+			require("dap-python").setup(debugpy_python)
 			require("dap-go").setup({
 				dap_configurations = {
 					{
@@ -33,6 +47,28 @@ return {
 						args = get_arguments,
 					},
 				},
+			})
+
+			table.insert(dap.configurations.python, {
+				type = "python",
+				request = "launch",
+				name = "Python: Current file",
+				program = "${file}",
+				pythonPath = project_python,
+				console = "integratedTerminal",
+				justMyCode = true,
+			})
+
+			table.insert(dap.configurations.python, {
+				type = "python",
+				request = "launch",
+				name = "Python: Module",
+				module = function()
+					return vim.fn.input("Module name: ")
+				end,
+				pythonPath = project_python,
+				console = "integratedTerminal",
+				justMyCode = true,
 			})
 
 			dap.adapters.lldb = {

@@ -18,6 +18,7 @@ return {
             typescript = { "prettier" },
             javascriptreact = { "prettier" },
             typescriptreact = { "prettier" },
+            python = { "ruff_format" },
             svelte = { "prettier" },
             css = { "prettier" },
             scss = { "prettier" },

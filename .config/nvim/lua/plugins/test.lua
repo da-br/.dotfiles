@@ -4,6 +4,7 @@ return {
 		event = "VeryLazy",
 		dependencies = {
 			"fredrikaverpil/neotest-golang",
+			"nvim-neotest/neotest-python",
 			"nvim-neotest/nvim-nio",
 			"nvim-lua/plenary.nvim",
 			"antoinemadec/FixCursorHold.nvim",
@@ -13,6 +14,9 @@ return {
 			require("neotest").setup({
 				adapters = {
 					require("neotest-golang")({ dap_go_enabled = true }), -- Registration
+					require("neotest-python")({
+						dap = { justMyCode = true },
+					}),
 				},
 			})
 

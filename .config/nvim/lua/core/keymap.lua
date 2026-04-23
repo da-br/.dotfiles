@@ -67,6 +67,38 @@ map("v", ">", ">gv")
 map("n", "[q", vim.cmd.cprev, { desc = "Previous Quickfix" })
 map("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
 
+local function run_main_py()
+	local current = vim.api.nvim_buf_get_name(0)
+	local start_dir = current ~= "" and vim.fs.dirname(current) or vim.uv.cwd()
+	local main_py = vim.fs.find("main.py", { path = start_dir, upward = true })[1]
+
+	if not main_py then
+		local matches = vim.fn.globpath(vim.uv.cwd(), "**/main.py", false, true)
+		main_py = matches[1]
+	end
+
+	if not main_py then
+		vim.notify("Could not find main.py", vim.log.levels.ERROR)
+		return
+	end
+
+	local root = vim.fs.dirname(main_py)
+	local venv_python = root .. "/.venv/bin/python"
+	local python = vim.fn.executable(venv_python) == 1 and venv_python or (vim.fn.executable("python3") == 1 and "python3" or "python")
+	local cmd = string.format(
+		"cd %s && %s %s",
+		vim.fn.shellescape(root),
+		vim.fn.shellescape(python),
+		vim.fn.shellescape(main_py)
+	)
+
+	vim.cmd("botright 12split")
+	vim.cmd("terminal " .. cmd)
+	vim.cmd("startinsert")
+end
+
+map("n", "<leader>pm", run_main_py, { desc = "Run main.py" })
+
 -- diagnostic
 local diagnostic_goto = function(next, severity)
 	local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev

@@ -9,6 +9,9 @@ return {
                     "svelte-language-server",
                     "prettier",
                     "eslint-lsp",
+                    "basedpyright",
+                    "ruff",
+                    "debugpy",
                 },
             },
         },
@@ -40,6 +43,8 @@ return {
                 "lua_ls",
                 "ts_ls",
                 "zls",
+                "basedpyright",
+                "ruff",
                 -- "svelte"
             },
 
@@ -64,6 +69,53 @@ return {
                     })
                     vim.g.zig_fmt_parse_errors = 0
                     vim.g.zig_fmt_autosave = 0
+                end,
+
+                basedpyright = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.basedpyright.setup({
+                        capabilities = capabilities,
+                        root_dir = function(fname)
+                            return lspconfig.util.root_pattern("pyproject.toml", "uv.lock", ".git")(fname)
+                                or vim.fs.dirname(fname)
+                        end,
+                        single_file_support = true,
+                        settings = {
+                            basedpyright = {
+                                disableOrganizeImports = true,
+                                analysis = {
+                                    typeCheckingMode = "strict",
+                                    diagnosticMode = "workspace",
+                                    autoImportCompletions = true,
+                                    autoSearchPaths = true,
+                                    useLibraryCodeForTypes = true,
+                                    inlayHints = {
+                                        variableTypes = true,
+                                        callArgumentNames = true,
+                                        functionReturnTypes = true,
+                                        genericTypes = true,
+                                    },
+                                },
+                            },
+                        },
+                    })
+                end,
+
+                ruff = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.ruff.setup({
+                        capabilities = capabilities,
+                        root_dir = function(fname)
+                            return lspconfig.util.root_pattern("pyproject.toml", "ruff.toml", ".ruff.toml", "uv.lock", ".git")(fname)
+                                or vim.fs.dirname(fname)
+                        end,
+                        single_file_support = true,
+                        on_attach = function(client, _)
+                            client.server_capabilities.hoverProvider = false
+                            client.server_capabilities.documentFormattingProvider = false
+                            client.server_capabilities.documentRangeFormattingProvider = false
+                        end,
+                    })
                 end,
 
                 lua_ls = function()
@@ -292,10 +344,11 @@ return {
                 vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = 0 })
                 vim.keymap.set("n", "gy", vim.lsp.buf.type_definition, { buffer = 0 })
                 vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = 0 })
+                vim.keymap.set({ "n", "i" }, "<C-k>", vim.lsp.buf.signature_help, { buffer = 0, desc = "Signature Help" })
 
                 vim.keymap.set("n", "<space>cr", vim.lsp.buf.rename, { buffer = 0 })
                 vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, { buffer = 0 })
-                vim.keymap.set("x", "<space>ca", vim.lsp.buf.range_code_action, { buffer = 0 })
+                vim.keymap.set("x", "<space>ca", vim.lsp.buf.code_action, { buffer = 0 })
 
                 -- Override server capabilities
                 if settings.server_capabilities then
