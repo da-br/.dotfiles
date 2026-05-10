@@ -363,5 +363,30 @@ return {
                 end
             end,
         })
+
+        -- Some language servers can lag behind new/changed files until restart.
+        -- Explicitly notify attached clients on save so workspace symbols/imports refresh.
+        vim.api.nvim_create_autocmd("BufWritePost", {
+            callback = function(args)
+                local name = vim.api.nvim_buf_get_name(args.buf)
+                if name == "" or vim.bo[args.buf].buftype ~= "" then
+                    return
+                end
+
+                local uri = vim.uri_from_fname(name)
+                for _, client in ipairs(vim.lsp.get_clients({ bufnr = args.buf })) do
+                    if client:supports_method("workspace/didChangeWatchedFiles") then
+                        client.notify("workspace/didChangeWatchedFiles", {
+                            changes = {
+                                {
+                                    uri = uri,
+                                    type = 2, -- Changed
+                                },
+                            },
+                        })
+                    end
+                end
+            end,
+        })
     end,
 }

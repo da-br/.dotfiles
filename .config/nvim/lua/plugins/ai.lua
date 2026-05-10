@@ -1,6 +1,6 @@
 return {
     "yetone/avante.nvim",
-    enabled = false,
+    -- enabled = false,
     event = "VeryLazy",
     version = false, -- Never set this value to "*"! Never!
     ---@module 'avante'
@@ -8,17 +8,31 @@ return {
     opts = {
         -- add any opts here
         -- for example
-        provider = "openai",
+        provider = "opencode",
+        mappings = {
+            toggle = {
+                default = "<leader>aT",
+            },
+        },
         providers = {
-            openai = {
-                endpoint = "https://api.openai.com/v1",
-                model = "gpt-4o",                 -- your desired model (or use gpt-4o, etc.)
-                extra_request_body = {
-                    timeout = 30000,              -- Timeout in milliseconds, increase this for reasoning models
-                    temperature = 0.75,
-                    max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
-                    --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
-                },
+            -- copilot = {
+            --     model = "gpt-4o-2024-11-20",
+            -- },
+            -- openai = {
+            --     endpoint = "https://api.openai.com/v1",
+            --     model = "gpt-4o",                 -- your desired model (or use gpt-4o, etc.)
+            --     extra_request_body = {
+            --         timeout = 30000,              -- Timeout in milliseconds, increase this for reasoning models
+            --         temperature = 0.75,
+            --         max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
+            --         --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
+            --     },
+            -- },
+        },
+        acp_providers = {
+            opencode = {
+                command = "opencode",
+                args = { "acp" },
             },
         },
     },
@@ -37,7 +51,13 @@ return {
         "stevearc/dressing.nvim",        -- for input provider dressing
         -- "folke/snacks.nvim",         -- for input provider snacks
         -- "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-        "zbirenbaum/copilot.lua", -- for providers='copilot'
+        -- {
+        --     "zbirenbaum/copilot.lua", -- for providers='copilot'
+        --     opts = {
+        --         suggestion = { enabled = false },
+        --         panel = { enabled = false },
+        --     },
+        -- },
         {
             -- support for image pasting
             "HakonHarnes/img-clip.nvim",

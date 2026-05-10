@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+project_dir=""
+path="$(pwd)"
+
+while [[ "$path" != "/" ]]; do
+  if [[ -f "$path/pyproject.toml" ]]; then
+    project_dir="$path"
+    break
+  fi
+  path="$(dirname "$path")"
+done
+
+if [[ -n "$project_dir" ]]; then
+  exec uv run --project "$project_dir" python "$@"
+fi
+
+exec python3 "$@"
