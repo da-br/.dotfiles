@@ -27,6 +27,8 @@ return {
             yaml = { "prettier" },
             markdown = { "prettier" },
             lua = { "stylua" },
+            c = { "clang_format" },
+            cpp = { "clang_format" },
         },
         default_format_opts = {
             lsp_fallback = true,

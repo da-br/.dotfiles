@@ -77,82 +77,114 @@ return {
 				name = "lldb",
 			}
 
-			dap.configurations.zig = {
-				{
-					name = "Launch",
-					type = "lldb",
-					request = "launch",
-					program = "${workspaceFolder}/zig-out/bin/${workspaceFolderBasename}",
-					cwd = "${workspaceFolder}",
-					stopOnEntry = false,
-					args = {},
-				},
-				-- {
-				-- 	name = "Launch",
-				-- 	type = "lldb",
-				-- 	request = "launch",
-				-- 	program = function()
-				-- 		return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/zig-out/bin/", "file")
-				-- 	end,
-				-- 	cwd = "${workspaceFolder}",
-				-- 	stopOnEntry = false,
-				-- 	args = {},
-				--
-				-- 	-- 💀
-				-- 	-- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
-				-- 	--
-				-- 	--    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
-				-- 	--
-				-- 	-- Otherwise you might get the following error:
-				-- 	--
-				-- 	--    Error on launch: Failed to attach to the target process
-				-- 	--
-				-- 	-- But you should be aware of the implications:
-				-- 	-- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
-				-- 	-- runInTerminal = false,
-				-- },
-			}
+		dap.configurations.zig = {
+			{
+				name = "Launch",
+				type = "lldb",
+				request = "launch",
+				program = "${workspaceFolder}/zig-out/bin/${workspaceFolderBasename}",
+				cwd = "${workspaceFolder}",
+				stopOnEntry = false,
+				args = {},
+			},
+			-- {
+			-- 	name = "Launch",
+			-- 	type = "lldb",
+			-- 	request = "launch",
+			-- 	program = function()
+			-- 		return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/zig-out/bin/", "file")
+			-- 	end,
+			-- 	cwd = "${workspaceFolder}",
+			-- 	stopOnEntry = false,
+			-- 	args = {},
+			--
+			-- 	-- 💀
+			-- 	-- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
+			-- 	--
+			-- 	--    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+			-- 	--
+			-- 	-- Otherwise you might get the following error:
+			-- 	--
+			-- 	--    Error on launch: Failed to attach to the target process
+			-- 	--
+			-- 	-- But you should be aware of the implications:
+			-- 	-- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
+			-- 	-- runInTerminal = false,
+			-- },
+		}
 
-			require("nvim-dap-virtual-text").setup()
+		local c_cpp_launch = {
+			{
+				name = "Launch executable",
+				type = "lldb",
+				request = "launch",
+				program = function()
+					return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+				end,
+				cwd = "${workspaceFolder}",
+				stopOnEntry = false,
+				args = get_arguments,
+			},
+			{
+				name = "Launch PlatformIO firmware",
+				type = "lldb",
+				request = "launch",
+				program = function()
+					-- PlatformIO builds to .pio/build/<env>/firmware.elf
+					local pio_elf = vim.fn.glob(vim.fn.getcwd() .. "/.pio/build/*/firmware.elf", false, true)
+					if #pio_elf == 1 then
+						return pio_elf[1]
+					end
+					return vim.fn.input("Path to firmware ELF: ", vim.fn.getcwd() .. "/.pio/build/", "file")
+				end,
+				cwd = "${workspaceFolder}",
+				stopOnEntry = false,
+				args = {},
+			},
+		}
+		dap.configurations.c = c_cpp_launch
+		dap.configurations.cpp = c_cpp_launch
 
-			-- Eval var under cursor
-			vim.keymap.set("n", "<space>=", function()
-				require("dapui").eval(nil, { enter = true })
-			end, { desc = "eval (Debug)" })
+		require("nvim-dap-virtual-text").setup()
 
-			-- vim.keymap.set("n", "<leader>td", function()
-			-- 	require("neotest").run.run({ strategy = "dap" })
-			-- end, { desc = "Debug Nearest" })
+		-- Eval var under cursor
+		vim.keymap.set("n", "<space>=", function()
+			require("dapui").eval(nil, { enter = true })
+		end, { desc = "eval (Debug)" })
 
-			vim.keymap.set("n", "<leader>ds", ui.toggle, { desc = "Debug show ui toggle" })
-			vim.keymap.set("n", "<F4>", dap.step_back)
-			vim.keymap.set("n", "<F5>", dap.continue)
-			vim.keymap.set("n", "<F17>", dap.terminate, { desc = "<S-F5> Stop Debug" })
-			vim.keymap.set("n", "<F9>", dap.toggle_breakpoint)
-			vim.keymap.set("n", "<F21>", function()
-				require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
-			end, { desc = "<S-F9> Stop Debug" })
-			vim.keymap.set("n", "<F70>", dap.run_to_cursor) -- <C-F10>
-			vim.keymap.set("n", "<leader>dc", dap.run_to_cursor) -- <C-F10>
-			vim.keymap.set("n", "<F82>", dap.goto_) -- <C-S-F10>
-			vim.keymap.set("n", "<leader>ds", dap.goto_) -- <C-S-F10>
-			vim.keymap.set("n", "<F10>", dap.step_over)
-			vim.keymap.set("n", "<F11>", dap.step_into)
-			vim.keymap.set("n", "<F23>", dap.step_out)
-			vim.keymap.set("n", "<F12>", dap.repl.toggle)
+		-- vim.keymap.set("n", "<leader>td", function()
+		-- 	require("neotest").run.run({ strategy = "dap" })
+		-- end, { desc = "Debug Nearest" })
 
-			dap.listeners.before.attach.dapui_config = function()
-				ui.open()
-			end
-			dap.listeners.before.launch.dapui_config = function()
-				ui.open()
-			end
-			dap.listeners.before.event_terminated.dapui_config = function()
-				ui.close()
-			end
-			dap.listeners.before.event_exited.dapui_config = function()
-				ui.close()
-			end
-		end,
+		vim.keymap.set("n", "<leader>ds", ui.toggle, { desc = "Debug show ui toggle" })
+		vim.keymap.set("n", "<F4>", dap.step_back)
+		vim.keymap.set("n", "<F5>", dap.continue)
+		vim.keymap.set("n", "<F17>", dap.terminate, { desc = "<S-F5> Stop Debug" })
+		vim.keymap.set("n", "<F9>", dap.toggle_breakpoint)
+		vim.keymap.set("n", "<F21>", function()
+			require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
+		end, { desc = "<S-F9> Stop Debug" })
+		vim.keymap.set("n", "<F70>", dap.run_to_cursor) -- <C-F10>
+		vim.keymap.set("n", "<leader>dc", dap.run_to_cursor) -- <C-F10>
+		vim.keymap.set("n", "<F82>", dap.goto_) -- <C-S-F10>
+		vim.keymap.set("n", "<leader>ds", dap.goto_) -- <C-S-F10>
+		vim.keymap.set("n", "<F10>", dap.step_over)
+		vim.keymap.set("n", "<F11>", dap.step_into)
+		vim.keymap.set("n", "<F23>", dap.step_out)
+		vim.keymap.set("n", "<F12>", dap.repl.toggle)
+
+		dap.listeners.before.attach.dapui_config = function()
+			ui.open()
+		end
+		dap.listeners.before.launch.dapui_config = function()
+			ui.open()
+		end
+		dap.listeners.before.event_terminated.dapui_config = function()
+			ui.close()
+		end
+		dap.listeners.before.event_exited.dapui_config = function()
+			ui.close()
+		end
+	end,
 	},
 }

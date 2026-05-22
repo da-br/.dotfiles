@@ -12,7 +12,19 @@ end
 return {
     {
         "stevearc/oil.nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
+        dependencies = { 
+            { "nvim-tree/nvim-web-devicons" },
+            { "echasnovski/mini.icons", opts = {} },
+            {
+              "malewicz1337/oil-git.nvim",
+              dependencies = { "stevearc/oil.nvim" },
+              opts = {
+                show_file_highlights = true,
+                show_directory_highlights = false,
+                show_ignored_files = true,
+              },
+            }
+        },
         config = function()
             require("oil").setup({
                 columns = { "icon" },

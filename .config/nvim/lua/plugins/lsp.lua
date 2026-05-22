@@ -12,6 +12,8 @@ return {
                     "basedpyright",
                     "ruff",
                     "debugpy",
+                    "clangd",
+                    "clang-format",
                 },
             },
         },
@@ -45,6 +47,7 @@ return {
                 "zls",
                 "basedpyright",
                 "ruff",
+                "clangd",
                 -- "svelte"
             },
 
@@ -122,6 +125,49 @@ return {
                     local lspconfig = require("lspconfig")
                     lspconfig.lua_ls.setup({
                         capabilities = capabilities,
+                    })
+                end,
+
+                clangd = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.clangd.setup({
+                        capabilities = vim.tbl_deep_extend("force", capabilities, {
+                            offsetEncoding = { "utf-16" },
+                        }),
+                        root_dir = lspconfig.util.root_pattern(
+                            "platformio.ini",
+                            "CMakeLists.txt",
+                            "compile_commands.json",
+                            ".clangd",
+                            ".git"
+                        ),
+                        cmd = {
+                            "clangd",
+                            "--background-index",
+                            "--clang-tidy",
+                            "--header-insertion=iwyu",
+                            "--completion-style=detailed",
+                            "--function-arg-placeholders",
+                        },
+                        init_options = {
+                            usePlaceholders = true,
+                            completeUnimported = true,
+                            clangdFileStatus = true,
+                        },
+                        settings = {
+                            clangd = {
+                                inlayHints = {
+                                    enable = true,
+                                    parameterNames = true,
+                                    deducedTypes = true,
+                                },
+                            },
+                        },
+                        on_attach = function(client, _)
+                            -- Let clang-format via conform handle formatting
+                            client.server_capabilities.documentFormattingProvider = false
+                            client.server_capabilities.documentRangeFormattingProvider = false
+                        end,
                     })
                 end,
 

@@ -1,6 +1,6 @@
 return {
     "yetone/avante.nvim",
-    -- enabled = false,
+    enabled = false,
     event = "VeryLazy",
     version = false, -- Never set this value to "*"! Never!
     ---@module 'avante'
@@ -80,6 +80,13 @@ return {
             'MeanderingProgrammer/render-markdown.nvim',
             opts = {
                 file_types = { "markdown", "Avante" },
+                -- Disable in floating windows (hover, telescope preview, etc.)
+                -- which use buftype=nofile
+                overrides = {
+                    buftype = {
+                        nofile = { enabled = false },
+                    },
+                },
             },
             ft = { "markdown", "Avante" },
         },
