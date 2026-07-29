@@ -1,5 +1,5 @@
 ---
-name: gitgub-wi-impl
+name: github-wi-impl
 description: works on a github work item
 ---
 

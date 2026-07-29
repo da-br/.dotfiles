@@ -1,5 +1,5 @@
 ---
-name: gitgub-wi-triage
+name: github-wi-triage
 description: analyzes a GitHub issue and produces an implementation plan
 ---
 

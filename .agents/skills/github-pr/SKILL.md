@@ -1,6 +1,6 @@
 ---
 name: github-pr
-description: roasts and reviews a pr
+description: Adversarial review of a pull request — correctness, simplicity, security, testing, API design — producing a "roast" comment before merge. Use when asked to review, roast, or critique a PR.
 ---
 
 ## Purpose
