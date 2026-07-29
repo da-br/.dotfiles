@@ -27,3 +27,15 @@ sudo pacman -S ansible
 ansible-galaxy collection install kewlfft.aur
 ansible-playbook ~/.dotfiles/.config/ansible/home.yaml --ask-become-pass
 ```
+
+## symlinks
+
+Symlinks from `~` into this repo are managed by the "Create symlinks for dotfiles" task in
+`.config/ansible/home.yaml` (not stow, even though it's installed). It loops over a list of
+paths and links `~/.dotfiles/<path>` -> `~/<path>`.
+
+To add a new dotfile: add its path to the `loop` list in that task, then re-run:
+
+```
+ansible-playbook ~/.dotfiles/.config/ansible/home.yaml --ask-become-pass
+```

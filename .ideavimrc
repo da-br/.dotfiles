@@ -5,6 +5,8 @@ set scrolloff=10
 set showmode
 set showcmd
 
+set VimEverywhere
+
 set ignorecase smartcase
 set incsearch
 set hlsearch
@@ -21,6 +23,7 @@ set visualbell
 "" Plugin Settings
 "" ========================================================
 
+set peekaboo
 set highlightedyank
 set nerdtree
 set easymotion
@@ -49,7 +52,7 @@ if has('ide')
         map ]e <action>(ReSharperGotoNextErrorInSolution)
         map [e <action>(ReSharperGotoPrevErrorInSolution)
         map <leader>xs <action>(Rider.ProblemsView.ErrorsInSolution)
-    elseif &ide =~? 'goland'
+    else
         map ]e <Action>(GotoNextError)
         map [e <Action>(GotoPrevError)
     endif
@@ -180,6 +183,14 @@ nmap <C-F11> <action>(JumpToStatement)
 nmap <leader>rs <action>(ChooseRunConfiguration)
 nmap <leader>rb <action>(ExternalSystem.RefreshAllProjects)
 
+"" Files 
+nmap <leader>Fn <action>(NewFile)
+
+if has('ide')
+    if &ide =~? 'clion'
+        nmap <leader>Fc <action>(CIDR.Lang.Cpp.NewClass)
+    endif
+endif
 
 "" vim things
 nmap <leader>vf <action>(VimFindActionIdAction)
