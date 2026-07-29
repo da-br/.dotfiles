@@ -88,6 +88,77 @@ keep changes focused, prefer clarity over cleverness.
 
 Broken windows should be fixed while you are nearby.
 
+# Security
+
+Security is a non-negotiable quality requirement.
+
+Every change should improve or maintain the security posture of the project.
+
+Always:
+
+- treat all external input as untrusted
+- validate input and encode output appropriately
+- follow the principle of least privilege
+- avoid introducing unnecessary dependencies
+- keep dependencies updated where practical
+- never hardcode secrets, credentials, API keys or tokens
+- use secure defaults rather than relying on configuration
+- prefer proven libraries over custom security implementations
+- fail securely rather than silently ignoring security errors
+- write tests for security-sensitive behaviour where appropriate
+
+Continuously look for:
+
+- exposed secrets or credentials
+- vulnerable or outdated dependencies
+- authentication or authorization weaknesses
+- privilege escalation opportunities
+- injection vulnerabilities
+- insecure deserialization
+- insecure file handling
+- race conditions
+- information disclosure
+- missing input validation
+- insecure defaults
+- missing security headers
+- weak cryptography
+- denial-of-service risks
+- supply chain risks
+
+When a security issue is discovered:
+
+- fix it immediately if it is within the scope of the current work
+- otherwise create a GitHub Issue labelled `security`
+- document the reasoning on the Issue or Pull Request
+- never ignore or defer a security concern without recording it
+
+Never:
+
+- commit secrets or sensitive data
+- disable security features for convenience
+- weaken authentication or authorization without a documented reason
+- suppress security warnings without investigation
+- expose internal implementation details in production errors
+
+Security should be considered during design, implementation, testing, code review, and release readiness—not as a final checklist.
+
+# Completing Tasks
+
+When starting a new task
+1. Pull latest from main 
+1. Create new worktree
+
+The following instructions overrides the global no-commit rule
+After completing the task
+1. Commit your changes
+1. Open a PR into master.
+1. In a new agent run /github-pr against the created PR
+1. Review the roast. Make changes if it is makes sense, otherwise comment why it is the way it is.
+1. Resolve the comments if necessary
+
+If manual human testing needs to be completed, create a new issue as a sub-issue with a label set as "human review"
+
+
 # Completing Tasks
 
 Start by reading using /github-wi-impl on the WI
