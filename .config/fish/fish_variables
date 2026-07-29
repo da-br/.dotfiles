@@ -1,7 +1,8 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
-SETUVAR --export ANDROID_HOME:/home/dabr/\x2eandroid
+SETUVAR --export ANDROID_SDK_ROOT:/home/dabr/\x2eandroid
 SETUVAR --export BUN_INSTALL:/home/dabr/\x2ebun
+SETUVAR --export CHROME_EXECUTABLE:google\x2dchrome\x2dstable
 SETUVAR --export DOTNET_ROOT:/home/dabr/\x2edotnet
 SETUVAR --export EDITOR:nvim
 SETUVAR --export GOROOT:/usr/local/go
@@ -16,4 +17,4 @@ SETUVAR _fisher_jorgebucaran_2F_fisher_files:\x7e/\x2econfig/fish/functions/fish
 SETUVAR _fisher_jorgebucaran_2F_nvm_2E_fish_files:\x7e/\x2econfig/fish/functions/_nvm_index_update\x2efish\x1e\x7e/\x2econfig/fish/functions/_nvm_list\x2efish\x1e\x7e/\x2econfig/fish/functions/_nvm_version_activate\x2efish\x1e\x7e/\x2econfig/fish/functions/_nvm_version_deactivate\x2efish\x1e\x7e/\x2econfig/fish/functions/nvm\x2efish\x1e\x7e/\x2econfig/fish/conf\x2ed/nvm\x2efish\x1e\x7e/\x2econfig/fish/completions/nvm\x2efish\x0d
 SETUVAR _fisher_plugins:jorgebucaran/fisher\x1ejorgebucaran/nvm\x2efish\x0d
 SETUVAR _fisher_upgraded_to_4_4:\x1d\x0d
-SETUVAR fish_user_paths:/home/dabr/\x2easpire/bin\x1e/home/dabr/\x2ebun/bin\x1e/usr/local/go/bin\x1e/home/dabr/\x2eandroid\x1e/home/dabr/\x2edotnet/tools\x1e/home/dabr/\x2edotnet\x1e/home/dabr/\x2elocal/bin
+SETUVAR fish_user_paths:/home/dabr/\x2easpire/bin\x1e/home/dabr/\x2eflutter/bin\x1e/usr/local/go/bin\x1e/usr/lib/jvm/java\x2d25\x2dopenjdk/bin\x1e/home/dabr/\x2edotnet/tools\x1e/home/dabr/\x2edotnet\x1e/home/dabr/\x2epub\x2dcache/bin\x1e/home/dabr/\x2elocal/bin

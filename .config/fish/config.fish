@@ -8,8 +8,8 @@ function fish_greeting
 end
 
 # Aliases
-alias node="bun"
-alias npm="bun"
+# alias node="bun"
+# alias npm="bun"
 alias cat="bat"
 alias ls="eza --group-directories-last --all --long --header --no-user --git --icons"
 alias ld="eza --only-dirs --long --header --no-user --total-size --git-repos --icons"
@@ -52,21 +52,26 @@ set -Ux GOROOT /usr/local/go
 set -Ux DOTNET_ROOT $HOME/.dotnet
 set -Ux JAVA_HOME /usr/lib/jvm/java-25-openjdk/
 set -Ux BUN_INSTALL $HOME/.bun
-set -Ux ANDROID_HOME $HOME/.android
+set -gx ANDROID_HOME $HOME/.android
+set -gx ANDROID_SDK_ROOT $HOME/.android
+
+set -Ux CHROME_EXECUTABLE google-chrome-stable
 
 # Path exports
 set -e fish_user_paths
 fish_add_path $HOME/.local/bin
+fish_add_path $HOME/.pub-cache/bin
 fish_add_path $GOBIN
 fish_add_path $DOTNET_ROOT
 fish_add_path $DOTNET_ROOT/tools
 fish_add_path $JAVA_HOME/bin
-fish_add_path $ANDROID_HOME
+# fish_add_path $ANDROID_HOME
 fish_add_path $GOROOT/bin
 fish_add_path /opt/nvim-linux64/bin
 fish_add_path $HOME/.zig/zig
 fish_add_path $HOME/.tools/bin
 fish_add_path $BUN_INSTALL/bin
+fish_add_path $HOME/.flutter/bin
 
 # Added by get-aspire-cli.sh
 fish_add_path $HOME/.aspire/bin
