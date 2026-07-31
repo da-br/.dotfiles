@@ -88,6 +88,8 @@ keep changes focused, prefer clarity over cleverness.
 
 Broken windows should be fixed while you are nearby.
 
+If code needs a paragraph to describe what it does, then it is not good code. Change it. Code should be self documenting.
+
 # Security
 
 Security is a non-negotiable quality requirement.
@@ -141,23 +143,6 @@ Never:
 - expose internal implementation details in production errors
 
 Security should be considered during design, implementation, testing, code review, and release readiness—not as a final checklist.
-
-# Completing Tasks
-
-When starting a new task
-1. Pull latest from main 
-1. Create new worktree
-
-The following instructions overrides the global no-commit rule
-After completing the task
-1. Commit your changes
-1. Open a PR into master.
-1. In a new agent run /github-pr against the created PR
-1. Review the roast. Make changes if it is makes sense, otherwise comment why it is the way it is.
-1. Resolve the comments if necessary
-
-If manual human testing needs to be completed, create a new issue as a sub-issue with a label set as "human review"
-
 
 # Completing Tasks
 
