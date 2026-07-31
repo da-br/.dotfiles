@@ -8,7 +8,7 @@ description: works on a github work item
 1. Read the issue title, description, labels, linked issues, and existing comments.
 2. Determine if the issue has been triaged, if it hasn't triage it first using github-wi-triage
 3. Begin work on the wi.
-4. Publish a PR with the work.
+4. Publish a PR with the work. Used stacked PRs when applicable
 5. Review the PR using github-pr
 6. Address all comments, marking them resolved as needed.
 7. Once the PR is merged, cleanup the remote branch(s)
