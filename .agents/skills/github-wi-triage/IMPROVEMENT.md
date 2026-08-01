@@ -32,6 +32,10 @@ Instead answer:
 
 If these questions cannot be answered from the issue, explicitly document the unknowns.
 
+If the added value from the improvement is not clear, write a comment asking to clarify why this improvement is needed.
+
+**Tasks must provide value**
+
 ---
 
 ## Step 2 – Define Success
