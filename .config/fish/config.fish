@@ -85,3 +85,6 @@ starship init fish | source
 fzf --fish | source
 
 
+
+# kimi-code
+fish_add_path -g "/home/dabr/.kimi-code/bin"
