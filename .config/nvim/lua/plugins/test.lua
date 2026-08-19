@@ -5,6 +5,7 @@ return {
 		dependencies = {
 			"fredrikaverpil/neotest-golang",
 			"nvim-neotest/neotest-python",
+			"sidlatau/neotest-dart",
 			"nvim-neotest/nvim-nio",
 			"nvim-lua/plenary.nvim",
 			"antoinemadec/FixCursorHold.nvim",
@@ -16,6 +17,10 @@ return {
 					require("neotest-golang")({ dap_go_enabled = true }), -- Registration
 					require("neotest-python")({
 						dap = { justMyCode = true },
+					}),
+					require("neotest-dart")({
+						command = "flutter",
+						use_lsp = true,
 					}),
 				},
 			})

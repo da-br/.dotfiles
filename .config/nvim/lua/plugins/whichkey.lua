@@ -22,6 +22,7 @@ return {
 			{ "<leader>c", group = "actions" }, -- group
 			{ "<leader>t", group = "tests" }, -- group
 			{ "<leader>x", group = "diagnostics" }, -- group
+			{ "<leader>F", group = "flutter" }, -- group
 			{
 				mode = { "n", "v", "i", "x" },
 				{ "<ESC>", hidden = true },

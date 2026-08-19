@@ -34,6 +34,7 @@ return {
                 "svelte",
                 "yaml",
                 "toml",
+                "dart",
             },
 
             -- Install parsers synchronously (only applied to `ensure_installed`)
