@@ -11,7 +11,7 @@ description: analyzes a GitHub issue and produces an implementation plan
 4. Publish the resulting plan as a comment on the GitHub issue.
 5. Set the milestone
 6. Set the relationships to other tasks
-7. Set a label as triaged:{score} where score is a number between 1 and 5.
+7. Set a priority and an effort
 
 A score is the importance/impact the issue will have. The higher the number the larger the impact. Anything below a 3 is a nice to have.
 
